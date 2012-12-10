@@ -1,0 +1,15 @@
+
+
+
+
+AcmeUserBundle_user:
+    resource: "@AcmeUserBundle/Resources/config/routing/user.yml"
+    prefix:   /user
+
+AcmeUserBundle_group:
+    resource: "@AcmeUserBundle/Resources/config/routing/group.yml"
+    prefix:  /manage/group
+
+AcmeUserBundle_region:
+    resource: "@AcmeUserBundle/Resources/config/routing/region.yml"
+    prefix:   /manage/region

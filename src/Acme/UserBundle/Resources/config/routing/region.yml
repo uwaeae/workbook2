@@ -1,0 +1,35 @@
+region:
+    pattern:  /
+    defaults: { _controller: "AcmeUserBundle:Region:index" }
+
+region_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AcmeUserBundle:Region:show" }
+
+region_new:
+    pattern:  /new
+    defaults: { _controller: "AcmeUserBundle:Region:new" }
+
+region_create:
+    pattern:  /create
+    defaults: { _controller: "AcmeUserBundle:Region:create" }
+    requirements: { _method: post }
+
+region_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AcmeUserBundle:Region:edit" }
+
+region_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AcmeUserBundle:Region:update" }
+    requirements: { _method: post }
+
+region_activate:
+    pattern:  /{id}/activate
+    defaults: { _controller: "AcmeUserBundle:Region:activate" }
+    requirements: { _method: post }
+
+region_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AcmeUserBundle:Region:delete" }
+    requirements: { _method: post }

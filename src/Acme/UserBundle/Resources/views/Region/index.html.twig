@@ -1,0 +1,56 @@
+{# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block title %}Conti Tire Management - Admin - User{% endblock %}
+
+
+{% block body %}
+<h1>{% trans%}region.regionlist{% endtrans %}
+    <a class="btn" href="{{ path('region_new') }}">
+        {% trans %}region.createregion{% endtrans %}
+        <i class="icon-plus createcolor"></i>
+    </a>
+</h1>
+
+<table class="table tablesorter">
+    <thead>
+        <tr>
+            <th>{% trans %} region.name {% endtrans %}<span>&nbsp;</span></th>
+            <th>{% trans %} region.disabled {%endtrans%}</th>
+            <th class="actionrow">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for key, entitieset in entities %}
+        {% for entity in entitieset %}
+            <tr>
+                <td>{{ entity.name }}</td>
+                <td><i class="{% if entity.disabled == 0 %}createcolor icon-ok{% else %}removecolor icon-remove{% endif %}"></i></td>
+                <td class="actionrow">
+                    <ul class="actionlist">
+                        <li>
+                            <a href="{{ path('region_edit', { 'id': entity.id }) }}" rel="tooltip" title="{% trans %}edit{% endtrans %}"><i class="icon-pencil"></i></a>
+                        </li>
+                        <li>
+                            <form action="{{ path('region_activate', { 'id': entity.id }) }}" method="post">
+                                {{ form_widget(entity.activateForm) }}
+                                {% if entity.disabled == 1 %}
+                                <a href="#" class="submitform" rel="tooltip" title="{% trans %}deactivate{% endtrans %}"><i class="icon-eye-close"></i></a>
+                                {% else %}
+                                <a href="#" class="submitform" rel="tooltip" title="{% trans %}activate{% endtrans %}"><i class="icon-eye-open"></i></a>
+                                {% endif %}
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

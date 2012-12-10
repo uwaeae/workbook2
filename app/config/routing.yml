@@ -1,4 +1,31 @@
+wb_message:
+    resource: "@WBMessageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+wb_manage:
+    resource: "@WBManageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+wb_calender:
+    resource: "@WBCalenderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+wb_core:
+    resource: "@WBCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #    prefix:   /_internal
+
+login:
+    pattern:   /login
+    defaults:  { _controller: AcmeSecurityBundle:Security:login }
+
+login_check:
+    pattern:   /login_check

@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block title %}Conti Tire Management - Admin - Group{% endblock %}
+
+
+{% block body %}
+<h1>{% trans %}group.new{% endtrans %}</h1>
+
+<form class="form-horizontal" action="{{ path('group_create') }}" method="post" {{ form_enctype(form) }}>
+
+    {{ form_widget(form) }}
+
+    <div class="buttons">
+
+        <a class="btn" href="{{ path('group') }}">
+            <i class="icon-remove removecolor"></i>
+            {% trans %}cancel{% endtrans %}
+        </a>
+
+        <a href="#" class="submitform btn">{% trans %}save{% endtrans %} <i class="icon-plus createcolor"></i></a>
+
+    </div>
+</form>
+{% endblock %}

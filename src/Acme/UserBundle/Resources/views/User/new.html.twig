@@ -1,0 +1,36 @@
+{# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block title %}Conti Tire Management - Admin - User{% endblock %}
+
+
+{% block body %}
+<h1>{% trans %}user.new{% endtrans %}</h1>
+
+<form class="form-horizontal" action="{{ path('user_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form)}}
+    {{ form_row(form.username )}}
+    {{ form_row(form.firstname )}}
+    {{ form_row(form.lastname )}}
+    {{ form_row(form.email )}}
+    {{ form_row(form.password )}}
+    {{ form_row(form.passwordrepeat )}}
+    {{ form_widget(form.file )}}
+    {{ form_rest(form) }}
+
+    <div class="buttons">
+        <a class="btn" href="{{ path('user') }}">
+            <i class="icon-remove removecolor"></i>
+            {% trans %}cancel{% endtrans %}
+        </a>
+
+        <a href="#" class="submitform btn">{% trans %}save{% endtrans %} <i class="icon-plus createcolor"></i></a>
+    </div>
+
+</form>
+{% endblock %}
