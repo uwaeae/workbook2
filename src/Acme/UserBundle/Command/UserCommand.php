@@ -46,12 +46,8 @@ protected function execute(InputInterface $input, OutputInterface $output)
         $user->setEmail($input->getArgument('Email'));
         $user->setFirstname($input->getArgument('Firstname'));
         $user->setLastname($input->getArgument('Lastname'));
-        $user->setDeleted(false);
+
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
-        $lang = $em->getRepository('CTMTranslateBundle:Language')->find(1);
-        $user->setLanguage($lang);
-        $currency = $em->getRepository('CTMProposalBundle:Currency')->find(1);
-        $user->setCurrency($currency);
 
         $em->persist($user);
         $em->flush();

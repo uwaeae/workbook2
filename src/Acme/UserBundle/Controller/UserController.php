@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $user = $this->get('security.context')->getToken()->getUser();
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AcmeUserBundle:User')->find($id);
 
@@ -59,25 +59,23 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-        $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-        $isTranslator = $this->get('security.context')->isGranted('ROLE_TRANSLATOR');
 
-        $formType = !$isAdmin && $isTranslator ? new UserTypeForTranslator() : new UserShow();
+
+        $formType =  new UserShow();
 
         $editForm = $this->createForm($formType, $entity);
 
         return $this->render('AcmeUserBundle:User:show.html.twig', array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-            'isAdmin' => $isAdmin,
-            'isTranslator' => $isTranslator
+
 
         ));
     }
 
     public function updateProfileAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $updated = false;
         $entity = $em->getRepository('AcmeUserBundle:User')->find($id);
 
@@ -90,7 +88,7 @@ class UserController extends Controller
 
         $editForm = $this->createForm(new UserShow(), $entity);
         $request = $this->getRequest();
-        $editForm->bindRequest($request);
+        $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $modifieduser = $this->get('security.context')->getToken()->getUser();
@@ -117,14 +115,12 @@ class UserController extends Controller
             //return $this->redirect($this->generateUrl('user_myprofile', array('id' => $id)));
         }
 
-        $isTranslator = $this->get('security.context')->isGranted('ROLE_TRANSLATOR');
+
 
         return $this->render('AcmeUserBundle:User:show.html.twig', array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'updated' => $updated,
-            'isAdmin' => $this->get('security.context')->isGranted('ROLE_ADMIN'),
-            'isTranslator' => $isTranslator
         ));
     }
 
@@ -135,15 +131,15 @@ class UserController extends Controller
     public function newAction()
     {
         $entity = new User();
-        $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-        $form =  $isAdmin ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
+
+        $form =  $this->get('security.context')->isGranted('ROLE_ADMIN') ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
 
 
 
         return $this->render('AcmeUserBundle:User:new.html.twig', array(
             'entity' => $entity,
             'form' => $form->createView(),
-            'isAdmin' => $isAdmin
+
         ));
     }
 
@@ -155,9 +151,8 @@ class UserController extends Controller
     {
         $entity = new User();
         $request = $this->getRequest();
-        $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-        $form = $isAdmin ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
-        $form->bindRequest($request);
+        $form = $this->get('security.context')->isGranted('ROLE_ADMIN') ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
+        $form->bind($request);
 
 
         if ($form->isValid()) {
@@ -172,7 +167,7 @@ class UserController extends Controller
             $modifieduser = $this->get('security.context')->getToken()->getUser();
             $entity->setModifiedUser($modifieduser->getId());
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             if ($entity->getFile()->upload()) $em->persist($entity->getFile());
             else $entity->setFile(null);
 
@@ -194,7 +189,7 @@ class UserController extends Controller
         return $this->render('AcmeUserBundle:User:new.html.twig', array(
             'entity' => $entity,
             'form' => $form->createView(),
-            'isAdmin' => $isAdmin
+
         ));
     }
 
@@ -204,17 +199,17 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AcmeUserBundle:User')->find($id);
-        $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
 
-        $editForm = $isAdmin ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
+        $editForm = $this->get('security.context')->isGranted('ROLE_ADMIN') ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -222,7 +217,7 @@ class UserController extends Controller
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'isAdmin' => $isAdmin
+
         ));
     }
 
@@ -232,7 +227,7 @@ class UserController extends Controller
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AcmeUserBundle:User')->find($id);
 
@@ -241,13 +236,12 @@ class UserController extends Controller
         }
         $oldpassword = $entity->getPassword();
         $oldfile = $entity->getFile();
-        $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-        $editForm = $isAdmin ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
+        $editForm = $this->get('security.context')->isGranted('ROLE_ADMIN') ? $this->createForm(new UserType(), $entity) : $this->createForm(new UserTypeForManager(), $entity);
 
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
-        $editForm->bindRequest($request);
+        $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $modifieduser = $this->get('security.context')->getToken()->getUser();
@@ -283,7 +277,7 @@ class UserController extends Controller
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'isAdmin' => $this->get('security.context')->isGranted('ROLE_ADMIN')
+
         ));
     }
 
@@ -296,11 +290,11 @@ class UserController extends Controller
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->bind($request);
 
         if ($form->isValid()) {
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('AcmeUserBundle:User')->find($id);
             $entity->setDeleted(true);
             $entity->setIsActive(false);
@@ -335,11 +329,11 @@ class UserController extends Controller
         $form = $this->createActivateForm($id);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->bind($request);
 
         if ($form->isValid()) {
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('AcmeUserBundle:User')->find($id);
 
             $active = $entity->getIsActive() ? false : true;
@@ -375,7 +369,7 @@ class UserController extends Controller
 
         $error = false;
         $info = false;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         if(!empty($c) && !empty($u)){
 
             try{

@@ -143,12 +143,30 @@ class Job
     /**
      * @var Store
      *
-     * @ORM\ManyToOne(targetEntity="Store")
+     * @ORM\ManyToOne(targetEntity="Address")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="store_id", referencedColumnName="id")
      * })
      */
-    private $store;
+    private $Address;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Acme\UserBundle\Entity\User", inversedBy="job")
+     * @ORM\JoinTable(name="job_user",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="job_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $user;
+
+
+
 
     /**
      * Constructor
@@ -159,4 +177,435 @@ class Job
         $this->invoice = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set contactPerson
+     *
+     * @param string $contactPerson
+     * @return Job
+     */
+    public function setContactPerson($contactPerson)
+    {
+        $this->contactPerson = $contactPerson;
+    
+        return $this;
+    }
+
+    /**
+     * Get contactPerson
+     *
+     * @return string 
+     */
+    public function getContactPerson()
+    {
+        return $this->contactPerson;
+    }
+
+    /**
+     * Set contactInfo
+     *
+     * @param string $contactInfo
+     * @return Job
+     */
+    public function setContactInfo($contactInfo)
+    {
+        $this->contactInfo = $contactInfo;
+    
+        return $this;
+    }
+
+    /**
+     * Get contactInfo
+     *
+     * @return string 
+     */
+    public function getContactInfo()
+    {
+        return $this->contactInfo;
+    }
+
+    /**
+     * Set end
+     *
+     * @param \DateTime $end
+     * @return Job
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    
+        return $this;
+    }
+
+    /**
+     * Get end
+     *
+     * @return \DateTime 
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * Set start
+     *
+     * @param \DateTime $start
+     * @return Job
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+    
+        return $this;
+    }
+
+    /**
+     * Get start
+     *
+     * @return \DateTime 
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * Set timeed
+     *
+     * @param \DateTime $timeed
+     * @return Job
+     */
+    public function setTimeed($timeed)
+    {
+        $this->timeed = $timeed;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeed
+     *
+     * @return \DateTime 
+     */
+    public function getTimeed()
+    {
+        return $this->timeed;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Job
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set timeinterval
+     *
+     * @param boolean $timeinterval
+     * @return Job
+     */
+    public function setTimeinterval($timeinterval)
+    {
+        $this->timeinterval = $timeinterval;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeinterval
+     *
+     * @return boolean 
+     */
+    public function getTimeinterval()
+    {
+        return $this->timeinterval;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Job
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set createdFrom
+     *
+     * @param integer $createdFrom
+     * @return Job
+     */
+    public function setCreatedFrom($createdFrom)
+    {
+        $this->createdFrom = $createdFrom;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdFrom
+     *
+     * @return integer 
+     */
+    public function getCreatedFrom()
+    {
+        return $this->createdFrom;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Job
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedFrom
+     *
+     * @param integer $updatedFrom
+     * @return Job
+     */
+    public function setUpdatedFrom($updatedFrom)
+    {
+        $this->updatedFrom = $updatedFrom;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedFrom
+     *
+     * @return integer 
+     */
+    public function getUpdatedFrom()
+    {
+        return $this->updatedFrom;
+    }
+
+    /**
+     * Add file
+     *
+     * @param WB\CoreBundle\Entity\File $file
+     * @return Job
+     */
+    public function addFile(\WB\CoreBundle\Entity\File $file)
+    {
+        $this->file[] = $file;
+    
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param WB\CoreBundle\Entity\File $file
+     */
+    public function removeFile(\WB\CoreBundle\Entity\File $file)
+    {
+        $this->file->removeElement($file);
+    }
+
+    /**
+     * Get file
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Add invoice
+     *
+     * @param WB\CoreBundle\Entity\Invoice $invoice
+     * @return Job
+     */
+    public function addInvoice(\WB\CoreBundle\Entity\Invoice $invoice)
+    {
+        $this->invoice[] = $invoice;
+    
+        return $this;
+    }
+
+    /**
+     * Remove invoice
+     *
+     * @param WB\CoreBundle\Entity\Invoice $invoice
+     */
+    public function removeInvoice(\WB\CoreBundle\Entity\Invoice $invoice)
+    {
+        $this->invoice->removeElement($invoice);
+    }
+
+    /**
+     * Get invoice
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getInvoice()
+    {
+        return $this->invoice;
+    }
+
+    /**
+     * Set jobState
+     *
+     * @param WB\CoreBundle\Entity\JobState $jobState
+     * @return Job
+     */
+    public function setJobState(\WB\CoreBundle\Entity\JobState $jobState = null)
+    {
+        $this->jobState = $jobState;
+    
+        return $this;
+    }
+
+    /**
+     * Get jobState
+     *
+     * @return WB\CoreBundle\Entity\JobState 
+     */
+    public function getJobState()
+    {
+        return $this->jobState;
+    }
+
+    /**
+     * Set jobType
+     *
+     * @param WB\CoreBundle\Entity\JobType $jobType
+     * @return Job
+     */
+    public function setJobType(\WB\CoreBundle\Entity\JobType $jobType = null)
+    {
+        $this->jobType = $jobType;
+    
+        return $this;
+    }
+
+    /**
+     * Get jobType
+     *
+     * @return WB\CoreBundle\Entity\JobType 
+     */
+    public function getJobType()
+    {
+        return $this->jobType;
+    }
+
+    /**
+     * Set Address
+     *
+     * @param WB\CoreBundle\Entity\Address $address
+     * @return Job
+     */
+    public function setAddress(\WB\CoreBundle\Entity\Address $address = null)
+    {
+        $this->Address = $address;
+    
+        return $this;
+    }
+
+    /**
+     * Get Address
+     *
+     * @return WB\CoreBundle\Entity\Address 
+     */
+    public function getAddress()
+    {
+        return $this->Address;
+    }
+
+    /**
+     * Add user
+     *
+     * @param Acme\UserBundle\Entity\User $user
+     * @return Job
+     */
+    public function addUser(\Acme\UserBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param Acme\UserBundle\Entity\User $user
+     */
+    public function removeUser(\Acme\UserBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

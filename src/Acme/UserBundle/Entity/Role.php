@@ -1,16 +1,16 @@
 <?php
 
-namespace WB\CoreBundle\Entity;
+namespace Acme\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * WB\CoreBundle\Entity\Settings
+ * WB\CoreBundle\Entity\Role
  *
- * @ORM\Table(name="settings")
+ * @ORM\Table(name="role")
  * @ORM\Entity
  */
-class Settings
+class Role
 {
     /**
      * @var integer $id
@@ -24,23 +24,16 @@ class Settings
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="text", nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
-     * @var string $value
+     * @var string $description
      *
-     * @ORM\Column(name="value", type="text", nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $value;
-
-    /**
-     * @var string $type
-     *
-     * @ORM\Column(name="type", type="text", nullable=false)
-     */
-    private $type;
+    private $description;
 
     /**
      * @var \DateTime $createdAt
@@ -57,7 +50,22 @@ class Settings
     private $updatedAt;
 
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
+     */
+    private $users;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -72,7 +80,7 @@ class Settings
      * Set name
      *
      * @param string $name
-     * @return Settings
+     * @return Role
      */
     public function setName($name)
     {
@@ -92,56 +100,33 @@ class Settings
     }
 
     /**
-     * Set value
+     * Set description
      *
-     * @param string $value
-     * @return Settings
+     * @param string $description
+     * @return Role
      */
-    public function setValue($value)
+    public function setDescription($description)
     {
-        $this->value = $value;
+        $this->description = $description;
     
         return $this;
     }
 
     /**
-     * Get value
+     * Get description
      *
      * @return string 
      */
-    public function getValue()
+    public function getDescription()
     {
-        return $this->value;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Settings
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
+        return $this->description;
     }
 
     /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Settings
+     * @return Role
      */
     public function setCreatedAt($createdAt)
     {
@@ -164,7 +149,7 @@ class Settings
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Settings
+     * @return Role
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -181,5 +166,38 @@ class Settings
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Add users
+     *
+     * @param Acme\UserBundle\Entity\User $users
+     * @return Role
+     */
+    public function addUser(\Acme\UserBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param Acme\UserBundle\Entity\User $users
+     */
+    public function removeUser(\Acme\UserBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

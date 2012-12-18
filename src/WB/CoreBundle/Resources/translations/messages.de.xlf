@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <!-- Navigation -->
+            <trans-unit id="1000">
+                <source>navigation.calendar</source>
+                <target>Karlender</target>
+            </trans-unit>
+            <trans-unit id="1001">
+                <source>navigation.job</source>
+                <target>Arbeit</target>
+            </trans-unit>
+            <trans-unit id="1002">
+                <source>navigation.archive</source>
+                <target>Archiv</target>
+            </trans-unit>
+            <trans-unit id="1003">
+                <source>navigation.payroll</source>
+                <target>Stunden</target>
+            </trans-unit>
+            <trans-unit id="1004">
+                <source>navigation.customers</source>
+                <target>Kunden</target>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>

@@ -49,4 +49,83 @@ class Itementry
     private $job;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     * @return Itementry
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+    
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return integer 
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Set item
+     *
+     * @param WB\CoreBundle\Entity\Item $item
+     * @return Itementry
+     */
+    public function setItem(\WB\CoreBundle\Entity\Item $item = null)
+    {
+        $this->item = $item;
+    
+        return $this;
+    }
+
+    /**
+     * Get item
+     *
+     * @return WB\CoreBundle\Entity\Item 
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
+
+    /**
+     * Set job
+     *
+     * @param WB\CoreBundle\Entity\Job $job
+     * @return Itementry
+     */
+    public function setJob(\WB\CoreBundle\Entity\Job $job = null)
+    {
+        $this->job = $job;
+    
+        return $this;
+    }
+
+    /**
+     * Get job
+     *
+     * @return WB\CoreBundle\Entity\Job 
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
 }

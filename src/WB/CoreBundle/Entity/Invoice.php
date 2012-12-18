@@ -57,4 +57,116 @@ class Invoice
         $this->job = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set number
+     *
+     * @param integer $number
+     * @return Invoice
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer 
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Invoice
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Invoice
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add job
+     *
+     * @param WB\CoreBundle\Entity\Job $job
+     * @return Invoice
+     */
+    public function addJob(\WB\CoreBundle\Entity\Job $job)
+    {
+        $this->job[] = $job;
+    
+        return $this;
+    }
+
+    /**
+     * Remove job
+     *
+     * @param WB\CoreBundle\Entity\Job $job
+     */
+    public function removeJob(\WB\CoreBundle\Entity\Job $job)
+    {
+        $this->job->removeElement($job);
+    }
+
+    /**
+     * Get job
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
 }

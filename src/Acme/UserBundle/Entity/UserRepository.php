@@ -16,10 +16,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         $q = $this
             ->createQueryBuilder('u')
-            ->where('u.username = :username')
+            ->where('u.username = :username OR u.email = :email')
             ->setParameter('username', $username)
-            ->getQuery()
-        ;
+            ->setParameter('email', $username)
+            ->getQuery();
 
         try {
             // The Query::getSingleResult() method throws an exception
@@ -39,7 +39,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
         }
 
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->find($user->getId());
     }
 
     public function supportsClass($class)
@@ -47,3 +47,4 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
 }
+

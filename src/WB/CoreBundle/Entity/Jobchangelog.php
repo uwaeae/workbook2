@@ -53,9 +53,9 @@ class Jobchangelog
     private $job;
 
     /**
-     * @var SfGuardUser
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="SfGuardUser")
+     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -63,4 +63,129 @@ class Jobchangelog
     private $user;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     * @return Jobchangelog
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+    
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string 
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Jobchangelog
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Jobchangelog
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set job
+     *
+     * @param WB\CoreBundle\Entity\Job $job
+     * @return Jobchangelog
+     */
+    public function setJob(\WB\CoreBundle\Entity\Job $job = null)
+    {
+        $this->job = $job;
+    
+        return $this;
+    }
+
+    /**
+     * Get job
+     *
+     * @return WB\CoreBundle\Entity\Job 
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Acme\UserBundle\Entity\User $user
+     * @return Jobchangelog
+     */
+    public function setUser(\Acme\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Acme\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

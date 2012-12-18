@@ -52,14 +52,14 @@ class Permission
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="SfGuardGroup", mappedBy="permission")
+     * @ORM\ManyToMany(targetEntity="Group", mappedBy="permission")
      */
     private $group;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="SfGuardUser", mappedBy="permission")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="permission")
      */
     private $user;
 
@@ -72,4 +72,172 @@ class Permission
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Permission
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Permission
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Permission
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Permission
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add group
+     *
+     * @param Acme\UserBundle\Entity\Group $group
+     * @return Permission
+     */
+    public function addGroup(\Acme\UserBundle\Entity\Group $group)
+    {
+        $this->group[] = $group;
+    
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param Acme\UserBundle\Entity\Group $group
+     */
+    public function removeGroup(\Acme\UserBundle\Entity\Group $group)
+    {
+        $this->group->removeElement($group);
+    }
+
+    /**
+     * Get group
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * Add user
+     *
+     * @param Acme\UserBundle\Entity\User $user
+     * @return Permission
+     */
+    public function addUser(\Acme\UserBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param Acme\UserBundle\Entity\User $user
+     */
+    public function removeUser(\Acme\UserBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

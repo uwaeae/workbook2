@@ -1,0 +1,26 @@
+
+<div>
+    {% if navigation_left %}
+
+    <ul id="navigation_left" class="nav nav-tabs navbar-left">
+        {% for key, item in navigation_left %}
+
+        <li {% if item.isActive  %}class="active" {% endif %}>
+            <a href="{{ item.url }}">{{ item.label }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    {% if navigation_right %}
+        <ul id="navigation_right" class="nav nav-tabs navbar-left">
+            {% for key, item in navigation_left %}
+
+                <li {% if item.isActive  %}class="active" {% endif %}>
+                    <a href="{{ item.url }}">{{ item.label }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

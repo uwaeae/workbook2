@@ -39,4 +39,60 @@ class Taskposition
     private $item;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     * @return Taskposition
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+    
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return integer 
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Set item
+     *
+     * @param WB\CoreBundle\Entity\Item $item
+     * @return Taskposition
+     */
+    public function setItem(\WB\CoreBundle\Entity\Item $item = null)
+    {
+        $this->item = $item;
+    
+        return $this;
+    }
+
+    /**
+     * Get item
+     *
+     * @return WB\CoreBundle\Entity\Item 
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
 }

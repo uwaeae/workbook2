@@ -59,7 +59,7 @@ class Message
     /**
      * @var Job
      *
-     * @ORM\ManyToOne(targetEntity="Job")
+     * @ORM\ManyToOne(targetEntity="WB\CoreBundle\Entity\Job")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="job_id", referencedColumnName="id")
      * })
@@ -67,9 +67,9 @@ class Message
     private $job;
 
     /**
-     * @var SfGuardUser
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="SfGuardUser")
+     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sender", referencedColumnName="id")
      * })

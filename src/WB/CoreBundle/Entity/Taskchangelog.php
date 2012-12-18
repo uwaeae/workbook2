@@ -53,9 +53,9 @@ class Taskchangelog
     private $task;
 
     /**
-     * @var SfGuardUser
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="SfGuardUser")
+     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -63,4 +63,129 @@ class Taskchangelog
     private $user;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     * @return Taskchangelog
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+    
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string 
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Taskchangelog
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Taskchangelog
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set task
+     *
+     * @param WB\CoreBundle\Entity\Task $task
+     * @return Taskchangelog
+     */
+    public function setTask(\WB\CoreBundle\Entity\Task $task = null)
+    {
+        $this->task = $task;
+    
+        return $this;
+    }
+
+    /**
+     * Get task
+     *
+     * @return WB\CoreBundle\Entity\Task 
+     */
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Acme\UserBundle\Entity\User $user
+     * @return Taskchangelog
+     */
+    public function setUser(\Acme\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Acme\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

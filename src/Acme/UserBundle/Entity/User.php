@@ -3,14 +3,19 @@
 namespace Acme\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+//use WB\CoreBundle\Entity\Task
+
 
 /**
- * WB\CoreBundle\Entity\SfGuardUser
+ * WB\CoreBundle\Entity\User
  *
  * @ORM\Table(name="sf_guard_user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Acme\UserBundle\Entity\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
+ *
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer $id
@@ -36,11 +41,11 @@ class User
     private $lastName;
 
     /**
-     * @var string $emailAddress
+     * @var string $email
      *
      * @ORM\Column(name="email_address", type="string", length=255, nullable=false)
      */
-    private $emailAddress;
+    private $email;
 
     /**
      * @var string $username
@@ -52,7 +57,7 @@ class User
     /**
      * @var string $algorithm
      *
-     * @ORM\Column(name="algorithm", type="string", length=128, nullable=false)
+     * @ORM\Column(name="algorithm", type="string", length=128, nullable=true)
      */
     private $algorithm;
 
@@ -115,14 +120,7 @@ class User
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Calendar", mappedBy="user")
-     */
-    private $calendar;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="SfGuardGroup", inversedBy="user")
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="user")
      * @ORM\JoinTable(name="sf_guard_user_group",
      *   joinColumns={
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -137,7 +135,7 @@ class User
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="SfGuardPermission", inversedBy="user")
+     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="user")
      * @ORM\JoinTable(name="sf_guard_user_permission",
      *   joinColumns={
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -147,24 +145,555 @@ class User
      *   }
      * )
      */
+
     private $permission;
+
+    /**
+    * @var \Doctrine\Common\Collections\ArrayCollection
+    *
+    * @ORM\ManyToMany(targetEntity="Role", inversedBy="user")
+
+     */
+
+    private $roles;
+
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Task", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="WB\CoreBundle\Entity\Task", mappedBy="user")
      */
     private $task;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WB\CoreBundle\Entity\Company", inversedBy="Users")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     */
+    protected $Company;
+
+
+
+    /**
+     * @ORM\preUpdate
+     */
+    public function setUpdatedValue()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->calendar = new \Doctrine\Common\Collections\ArrayCollection();
+
         $this->group = new \Doctrine\Common\Collections\ArrayCollection();
         $this->permission = new \Doctrine\Common\Collections\ArrayCollection();
         $this->task = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+        $this->salt = md5(uniqid(null, true));
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
     
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set emailAddress
+     *
+     * @param string $emailAddress
+     * @return User
+     */
+    public function setEmailAddress($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get emailAddress
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    
+        return $this;
+    }
+
+    /**
+     * Set algorithm
+     *
+     * @param string $algorithm
+     * @return User
+     */
+    public function setAlgorithm($algorithm)
+    {
+        $this->algorithm = $algorithm;
+    
+        return $this;
+    }
+
+    /**
+     * Get algorithm
+     *
+     * @return string 
+     */
+    public function getAlgorithm()
+    {
+        return $this->algorithm;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    
+        return $this;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    
+        return $this;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set settings
+     *
+     * @param string $settings
+     * @return User
+     */
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+    
+        return $this;
+    }
+
+    /**
+     * Get settings
+     *
+     * @return string 
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    /**
+     * Set isSuperAdmin
+     *
+     * @param boolean $isSuperAdmin
+     * @return User
+     */
+    public function setIsSuperAdmin($isSuperAdmin)
+    {
+        $this->isSuperAdmin = $isSuperAdmin;
+    
+        return $this;
+    }
+
+    /**
+     * Get isSuperAdmin
+     *
+     * @return boolean 
+     */
+    public function getIsSuperAdmin()
+    {
+        return $this->isSuperAdmin;
+    }
+
+    /**
+     * Set lastLogin
+     *
+     * @param \DateTime $lastLogin
+     * @return User
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @return \DateTime 
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return User
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return User
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add group
+     *
+     * @param Acme\UserBundle\Entity\Group $group
+     * @return User
+     */
+    public function addGroup(\Acme\UserBundle\Entity\Group $group)
+    {
+        $this->group[] = $group;
+    
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param Acme\UserBundle\Entity\Group $group
+     */
+    public function removeGroup(\Acme\UserBundle\Entity\Group $group)
+    {
+        $this->group->removeElement($group);
+    }
+
+    /**
+     * Get group
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * Add permission
+     *
+     * @param Acme\UserBundle\Entity\Permission $permission
+     * @return User
+     */
+    public function addPermission(\Acme\UserBundle\Entity\Permission $permission)
+    {
+        $this->permission[] = $permission;
+    
+        return $this;
+    }
+
+    /**
+     * Remove permission
+     *
+     * @param Acme\UserBundle\Entity\Permission $permission
+     */
+    public function removePermission(\Acme\UserBundle\Entity\Permission $permission)
+    {
+        $this->permission->removeElement($permission);
+    }
+
+    /**
+     * Get permission
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * Add task
+     *
+     * @param WB\CoreBundle\Entity\Task $task
+     * @return User
+     */
+    public function addTask(\WB\CoreBundle\Entity\Task $task)
+    {
+        $this->task[] = $task;
+    
+        return $this;
+    }
+
+    /**
+     * Remove task
+     *
+     * @param WB\CoreBundle\Entity\Task $task
+     */
+    public function removeTask(\WB\CoreBundle\Entity\Task $task)
+    {
+        $this->task->removeElement($task);
+    }
+
+    /**
+     * Get task
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    /**
+     * Set Company
+     *
+     * @param WB\CoreBundle\Entity\Company $company
+     * @return User
+     */
+    public function setCompany(\WB\CoreBundle\Entity\Company $company = null)
+    {
+        $this->Company = $company;
+    
+        return $this;
+    }
+
+    /**
+     * Get Company
+     *
+     * @return WB\CoreBundle\Entity\Company 
+     */
+    public function getCompany()
+    {
+        return $this->Company;
+    }
+
+
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param Acme\UserBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\Acme\UserBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+    
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param Acme\UserBundle\Entity\Role $roles
+     */
+    public function removeRole(\Acme\UserBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
+    }
 }

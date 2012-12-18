@@ -58,4 +58,93 @@ class File
         $this->job = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return File
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set file
+     *
+     * @param string $file
+     * @return File
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return string 
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Add job
+     *
+     * @param WB\CoreBundle\Entity\Job $job
+     * @return File
+     */
+    public function addJob(\WB\CoreBundle\Entity\Job $job)
+    {
+        $this->job[] = $job;
+    
+        return $this;
+    }
+
+    /**
+     * Remove job
+     *
+     * @param WB\CoreBundle\Entity\Job $job
+     */
+    public function removeJob(\WB\CoreBundle\Entity\Job $job)
+    {
+        $this->job->removeElement($job);
+    }
+
+    /**
+     * Get job
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
 }
