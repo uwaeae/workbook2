@@ -130,7 +130,7 @@ class User implements UserInterface, \Serializable
      *   }
      * )
      */
-    private $group;
+    private $groups;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
@@ -148,14 +148,6 @@ class User implements UserInterface, \Serializable
 
     private $permission;
 
-    /**
-    * @var \Doctrine\Common\Collections\ArrayCollection
-    *
-    * @ORM\ManyToMany(targetEntity="Role", inversedBy="user")
-
-     */
-
-    private $roles;
 
 
     /**
@@ -173,7 +165,25 @@ class User implements UserInterface, \Serializable
     protected $Company;
 
 
+    /**
+     * @var string $passwordrepeat
+     */
+    private $passwordrepeat;
 
+    /**
+     * @var string $requestCode
+     *
+     * @ORM\Column(name="requestCode", type="string", length=255, nullable=true)
+     */
+
+    private $requestCode;
+
+    /**
+     * @var integer $modifiedUser
+     *
+     * @ORM\Column(name="modified_user", type="integer", nullable=true)
+     */
+    private $modifiedUser;
     /**
      * @ORM\preUpdate
      */
@@ -189,16 +199,31 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
 
-        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->permission = new \Doctrine\Common\Collections\ArrayCollection();
         $this->task = new \Doctrine\Common\Collections\ArrayCollection();
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->roles  = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
+    public function __toString(){
+
+        return $this->username;
+    }
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function isPasswordLegal()
+    {
+        return strcmp($this->password, $this->passwordrepeat);
+    }
     /**
      * @inheritDoc
      */
@@ -228,7 +253,14 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $output = array();
+        $roles =  $this->groups->toArray();
+        foreach($roles as $role){
+            $output[] = $role->getRole();
+        }
+
+
+        return $output;
     }
 
     /**
@@ -537,38 +569,7 @@ class User implements UserInterface, \Serializable
         return $this->updatedAt;
     }
 
-    /**
-     * Add group
-     *
-     * @param Acme\UserBundle\Entity\Group $group
-     * @return User
-     */
-    public function addGroup(\Acme\UserBundle\Entity\Group $group)
-    {
-        $this->group[] = $group;
-    
-        return $this;
-    }
-
-    /**
-     * Remove group
-     *
-     * @param Acme\UserBundle\Entity\Group $group
-     */
-    public function removeGroup(\Acme\UserBundle\Entity\Group $group)
-    {
-        $this->group->removeElement($group);
-    }
-
-    /**
-     * Get group
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
+ 
 
     /**
      * Add permission
@@ -674,26 +675,96 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+
+
     /**
-     * Add roles
+     * Set requestCode
      *
-     * @param Acme\UserBundle\Entity\Role $roles
+     * @param string $requestCode
      * @return User
      */
-    public function addRole(\Acme\UserBundle\Entity\Role $roles)
+    public function setRequestCode($requestCode)
     {
-        $this->roles[] = $roles;
+        $this->requestCode = $requestCode;
     
         return $this;
     }
 
     /**
-     * Remove roles
+     * Get requestCode
      *
-     * @param Acme\UserBundle\Entity\Role $roles
+     * @return string 
      */
-    public function removeRole(\Acme\UserBundle\Entity\Role $roles)
+    public function getRequestCode()
     {
-        $this->roles->removeElement($roles);
+        return $this->requestCode;
+
+
+
+    }
+
+    public function getPasswordrepeat(){
+        return $this->passwordrepeat;
+    }
+    public function setPasswordrepeat($passwordrepeat){
+        $this->passwordrepeat = $passwordrepeat;
+        return $this;
+    }
+
+
+    /**
+     * Set modifiedUser
+     *
+     * @param integer $modifiedUser
+     * @return User
+     */
+    public function setModifiedUser($modifiedUser)
+    {
+        $this->modifiedUser = $modifiedUser;
+    
+        return $this;
+    }
+
+    /**
+     * Get modifiedUser
+     *
+     * @return integer 
+     */
+    public function getModifiedUser()
+    {
+        return $this->modifiedUser;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param Acme\UserBundle\Entity\Group $groups
+     * @return User
+     */
+    public function addGroup(\Acme\UserBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+    
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param Acme\UserBundle\Entity\Group $groups
+     */
+    public function removeGroup(\Acme\UserBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

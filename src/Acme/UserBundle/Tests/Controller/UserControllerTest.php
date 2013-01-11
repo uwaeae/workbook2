@@ -13,13 +13,13 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/user/');
+        $crawler = $client->request('GET', '/admin/user/');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'user[field_name]'  => 'Test',
+            'acme_userbundle_usertype[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class UserControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'user[field_name]'  => 'Foo',
+            'acme_userbundle_usertype[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 
@@ -50,5 +50,6 @@ class UserControllerTest extends WebTestCase
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
+
     */
 }

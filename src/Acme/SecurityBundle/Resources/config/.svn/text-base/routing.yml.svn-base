@@ -1,0 +1,12 @@
+login:
+    pattern:   /login
+    defaults:  { _controller: AcmeSecurityBundle:Security:login }
+login_check:
+    pattern:   /login_check
+logout:
+  pattern: /logout
+
+
+resetPassword:
+  pattern:   /resetPassword/{c}/{u}
+  defaults:  { _controller: AcmeUserBundle:User:resetpassword, c:'' ,u:'' }

@@ -29,10 +29,21 @@ class Group
     private $name;
 
     /**
+     * @var string $role
+     *
+     * @ORM\Column(name="role", type="string", length=255, nullable=true)
+     */
+    private $role;
+
+
+    /**
      * @var string $description
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
+
+
+
     private $description;
 
     /**
@@ -79,7 +90,11 @@ class Group
         $this->permission = new \Doctrine\Common\Collections\ArrayCollection();
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
+    public function __toString(){
+        return is_string($this->role) ? $this->role: ' ' ;
+    }
+
 
     /**
      * Get id
@@ -247,5 +262,28 @@ class Group
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return Group
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

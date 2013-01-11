@@ -1,0 +1,197 @@
+<?php
+
+namespace Acme\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Acme\UserBundle\Entity\Region
+ *
+ * @ORM\Table(name="Region")
+ * @ORM\Entity
+ */
+class Region implements  \Serializable
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var boolean $disabled
+     *
+     * @ORM\Column(name="disabled", type="boolean", nullable=true)
+     */
+    private $disabled;
+
+    /**
+     * @var datetime $modified
+     *
+     * @ORM\Column(name="modified", type="datetime", nullable=true)
+     */
+    private $modified;
+
+    /**
+     * @var datetime $created
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @var integer $modifiedUser
+     *
+     * @ORM\Column(name="modified_user", type="integer", nullable=true)
+     */
+    private $modifiedUser;
+
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->created,
+            $this->modified,
+            $this->modifiedUser,
+            $this->name
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->created,
+            $this->modified,
+            $this->modifiedUser,
+            $this->name
+            ) = unserialize($serialized);
+    }
+
+
+
+    public function __toString(){
+        return $this->name != null ? $this->name : '';
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set disabeld
+     *
+     * @param boolean $disabeld
+     */
+    public function setDisabled($disabeld)
+    {
+        $this->disabled = $disabeld;
+    }
+
+    /**
+     * Get disabeld
+     *
+     * @return boolean 
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param datetime $modified
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return datetime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * Set created
+     *
+     * @param datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * Get created
+     *
+     * @return datetime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set modifiedUser
+     *
+     * @param integer $modifiedUser
+     */
+    public function setModifiedUser($modifiedUser)
+    {
+        $this->modifiedUser = $modifiedUser;
+    }
+
+    /**
+     * Get modifiedUser
+     *
+     * @return integer 
+     */
+    public function getModifiedUser()
+    {
+        return $this->modifiedUser;
+    }
+}

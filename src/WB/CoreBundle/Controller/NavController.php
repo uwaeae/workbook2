@@ -50,6 +50,26 @@ class NavController extends Controller
     }
 
     /**
+     * @Route("/header}")
+     * @Template("header.html.twig")
+     */
+    public function headerAction()
+    {
+
+        // todo Logo von User laden und darstellen
+        $user = $this->get('security.context')->getToken()->getUser();
+        if(!is_object($user))  $user = null;
+
+        return $this->render('WBCoreBundle:nav:header.html.twig', array(
+                'user'  => $user,
+
+            )
+        );
+
+    }
+
+
+        /**
      * @Route("/")
      * @Template("index.html.twig")
      */

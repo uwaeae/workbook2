@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * WB\CoreBundle\Entity\Job
  *
  * @ORM\Table(name="job")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WB\CoreBundle\Entity\JobRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Job
 {
@@ -141,7 +142,7 @@ class Job
     private $jobType;
 
     /**
-     * @var Store
+     * @var $Address
      *
      * @ORM\ManyToOne(targetEntity="Address")
      * @ORM\JoinColumns({
@@ -149,6 +150,14 @@ class Job
      * })
      */
     private $Address;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="job")
+     */
+    protected $Tasks;
+
+
+
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
@@ -175,6 +184,7 @@ class Job
     {
         $this->file = new \Doctrine\Common\Collections\ArrayCollection();
         $this->invoice = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -607,5 +617,38 @@ class Job
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add tasks
+     *
+     * @param WB\CoreBundle\Entity\Task $tasks
+     * @return Job
+     */
+    public function addTask(\WB\CoreBundle\Entity\Task $task)
+    {
+        $this->Tasks[] = $task;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tasks
+     *
+     * @param WB\CoreBundle\Entity\Task $tasks
+     */
+    public function removeTask(\WB\CoreBundle\Entity\Task $task)
+    {
+        $this->Tasks->removeElement($task);
+    }
+
+    /**
+     * Get tasks
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTasks()
+    {
+        return $this->Tasks;
     }
 }

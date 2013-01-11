@@ -1,0 +1,5 @@
+# src/Acme/UserBundle/Resources/config/validation.yml
+Acme\UserBundle\Entity\User:
+    getters:
+        passwordLegal:
+            - "False": { message: "error.passwordmismatch" }

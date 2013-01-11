@@ -13,13 +13,13 @@ class GroupControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/group/');
+        $crawler = $client->request('GET', '/admin/group/');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'group[field_name]'  => 'Test',
+            'acme_userbundle_grouptype[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class GroupControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'group[field_name]'  => 'Foo',
+            'acme_userbundle_grouptype[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 
@@ -50,5 +50,6 @@ class GroupControllerTest extends WebTestCase
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
+
     */
 }

@@ -11,7 +11,7 @@ security:
 
 
     role_hierarchy:
-        ROLE_TRANSLATOR:  ROLE_USER
+        ROLE_WORKER:      ROLE_USER
         ROLE_MANAGE:      ROLE_USER
         ROLE_ADMIN:       ROLE_MANAGE
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
@@ -23,12 +23,12 @@ security:
 
     firewalls:
 
-      #main:
-      #  pattern:    ^/resetPassword
-      #  anonymous:  ~
-      #satic_content:
-      #  pattern:  ^/static/imprint
-      #  anonymous: ~
+    #  main:
+    #  pattern:    ^/resetPassword
+    #  anonymous:  ~
+    #  satic_content:
+    #  pattern:  ^/static/imprint
+    #  anonymous: ~
 
 
       login_firewall:
