@@ -1,12 +1,10 @@
-Workbook 2 
-====================
 
-Eine Auftragsmanagment System für Kleine bis Mittelständische Betiebe die auf Montage oder beim Kunden arbeiten. 
+Eine Auftragsmanagement System für Kleine bis Mittelständische Betriebe die auf Montage oder beim Kunden arbeiten. 
 
 Entwicklung der zweiten Version mit einem Überarbeiteten Layout.
 
 
-1 Insterlation
+Installation
 --------------------
 
 Nach dem Clonen des Repositorys, muss eine Parameters.yml Datei erstellt werden unter app/config  
@@ -27,15 +25,11 @@ Nach dem Clonen des Repositorys, muss eine Parameters.yml Datei erstellt werden 
       database_path: null
 
 
-noch die Datenbank eingerichtet werden, über die Consolen befehle
+noch die Datenbank eingerichtet werden, über die Konsolenbefehle
 
     php app/console doctrine:database:create 
 
-und dann um die Tablen zu erstellen. 
+und dann um die Tabellen zu erstellen. 
 
     php app/console doctrine:schema:create --force
     
-
-
-
-
