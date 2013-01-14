@@ -1,0 +1,81 @@
+<h1>Task</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Start</th>
+            <td>{{ entity.start|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>End</th>
+            <td>{{ entity.end|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Scheduled</th>
+            <td>{{ entity.scheduled }}</td>
+        </tr>
+        <tr>
+            <th>Break</th>
+            <td>{{ entity.break }}</td>
+        </tr>
+        <tr>
+            <th>Overtime</th>
+            <td>{{ entity.overtime }}</td>
+        </tr>
+        <tr>
+            <th>Info</th>
+            <td>{{ entity.info }}</td>
+        </tr>
+        <tr>
+            <th>Approach</th>
+            <td>{{ entity.approach }}</td>
+        </tr>
+        <tr>
+            <th>Correctiontime</th>
+            <td>{{ entity.correctionTime }}</td>
+        </tr>
+        <tr>
+            <th>Correctioninfo</th>
+            <td>{{ entity.correctionInfo }}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Createdfrom</th>
+            <td>{{ entity.createdFrom }}</td>
+        </tr>
+        <tr>
+            <th>Updatedat</th>
+            <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updatedfrom</th>
+            <td>{{ entity.updatedFrom }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('task') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('task_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('task_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

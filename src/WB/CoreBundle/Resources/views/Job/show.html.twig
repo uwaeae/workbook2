@@ -1,0 +1,73 @@
+<h1>Job</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Contactperson</th>
+            <td>{{ entity.contactPerson }}</td>
+        </tr>
+        <tr>
+            <th>Contactinfo</th>
+            <td>{{ entity.contactInfo }}</td>
+        </tr>
+        <tr>
+            <th>End</th>
+            <td>{{ entity.end|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Start</th>
+            <td>{{ entity.start|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Timeed</th>
+            <td>{{ entity.timeed|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ entity.description }}</td>
+        </tr>
+        <tr>
+            <th>Timeinterval</th>
+            <td>{{ entity.timeinterval }}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Createdfrom</th>
+            <td>{{ entity.createdFrom }}</td>
+        </tr>
+        <tr>
+            <th>Updatedat</th>
+            <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updatedfrom</th>
+            <td>{{ entity.updatedFrom }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('job') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('job_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('job_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
