@@ -26,9 +26,9 @@ body {
 .form-signin .controls{
     width: 225px;
 }
- .form-signin .controls button.btn{
-     float: right;
- }
+.form-signin .controls button.btn{
+    float: right;
+}
 
 
 .login {
@@ -68,7 +68,7 @@ body {
     color: #000;
 }
 .navigation .nav-tabs > li.active{
-   background: none;
+    background: none;
 
 }
 
@@ -92,7 +92,73 @@ body {
 
 .navigation .nav-tabs > li a{
     color: #fff;
+}
 
+.background {
+    background-color: whitesmoke; 
+    outline:1px lightgrey solid; 
+    margin-right: 20px;
+    float:left;
+    padding:5px;
+    margin-bottom:30px
+}
+.box {
+    text-align:left;
+    margin-bottom:30px; 
+    width:100
+}
+.downloadbox {
+    text-align:left;
+    margin:10px;
+    border:1px solid lightgrey;
+    width:80%
+}
 
+#columns {
+    width: 99%;
+}
+#columns .column {
+    position: relative;
+    padding: 1%;
+    <!-- border: solid 1px lightgrey;-->
+}
+#columns .left {
+    float: left;
+    width: 60%;
+}
+#columns .right {
+    float: right;
+    width: 35%;
+}
 
+.bild {
+    margin-left:10px;
+    width:1em;
+    height:1em;
+}
+
+<!-- dropdown-->
+
+.dropdown-list {
+    height:200px;
+    width:200px;
+    border:1px solid #ccc;
+    <!--font:16px/26px Georgia, Garamond, Serif;-->
+    overflow:auto;
+}
+
+.dropdown-box{
+    margin:5px;
+}
+
+<!-- Text Styles-->
+
+.text1 {
+    font-family:'Verdana';
+    font-size:0.8em
+}
+.text2 {
+    font-family:georgia,garamond,serif;
+    font-size:1.2em;
+    font-weight:lighter
 }

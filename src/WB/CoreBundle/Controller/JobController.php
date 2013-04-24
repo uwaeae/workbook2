@@ -37,7 +37,7 @@ class JobController extends Controller
         foreach ( $workers as $worker ){
             $sheduledJobs[] = $em->getRepository('WBCoreBundle:Job')->getSheduledJobsByUser($worker->getId());
         }
-        $job_array['sheduledJobs'] = $sheduledJobs;
+       // $job_array['sheduledJobs'] = $sheduledJobs;
 
 
 
@@ -199,6 +199,22 @@ class JobController extends Controller
         }
 
         return $this->redirect($this->generateUrl('job'));
+    }
+    
+     /**
+     * Deletes a Job entity.
+     *
+     * @Route("/{id}/dropdown", name="job_dropdown")
+     * @Template("WBCoreBundle:Job:dropdown.html.twig")
+     */
+    public function dropdownAction(Request $request, $id){
+         $em = $this->getDoctrine()->getManager();
+         $entitys = $em->getRepository('WBCoreBundle:Job')->findAll($id);
+  
+         
+        return array(
+            'entitys'      => $entitys,
+        );
     }
 
     private function createDeleteForm($id)
