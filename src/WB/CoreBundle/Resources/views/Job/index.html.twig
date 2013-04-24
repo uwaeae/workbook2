@@ -22,52 +22,15 @@
 
             {% for key,entities in job_array %}
 
-            
-                <div class="tab-pane {% if loop.first %}active{% endif %}" id="{{ key }}">
+                {% include 'WBCoreBundle:Job:table.html.twig'
+                with {'key': key,'entities': entities,'active': loop.first}
+                %}
 
-                    <table class="records_list">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Contactperson</th>
-                            <th>Contactinfo</th>
-                            <th>End</th>
-                            <th>Start</th>
-                            <th>Timeed</th>
-                            <th>Description</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for entity in entities %}
-                            <tr onclick="document.location = '{{ path('job_show', { 'id': entity.id }) }}'">
-                                <td>{{ entity.id }}</td>
-                                <td>{{ entity.contactPerson }}</td>
-                                <td>{{ entity.contactInfo }}</td>
-                                <td>{% if entity.end %}{{ entity.end|date('Y-m-d H:i:s') }}{% endif %}</td>
-                                <td>{% if entity.start %}{{ entity.start|date('Y-m-d H:i:s') }}{% endif %}</td>
-                                <td>{% if entity.timeed %}{{ entity.timeed|date('Y-m-d H:i:s') }}{% endif %}</td>
-                                <td>{{ entity.description }}</td>
 
-                                <td>
-                                    <ul>
-                                        <li>
-                                            <a href="{{ path('job_show', { 'id': entity.id }) }}">show</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('job_edit', { 'id': entity.id }) }}">edit</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-               
+
             {% endfor %}
-        </div>
-        </div>
+    </div>
+
 
 
 {% endblock %}
