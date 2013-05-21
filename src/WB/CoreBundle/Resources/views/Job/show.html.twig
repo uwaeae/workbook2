@@ -13,79 +13,116 @@
 
 {% block body %}
 <div class="text1">
-{% render 'WBCoreBundle:Job:dropdown' with {'id': entity.id } %}
+    {% render 'WBCoreBundle:Job:dropdown' with {'id': entity.id } %}
     <div class="background"><a href="link">offene Aufträge in der Filiale (*VAR*)</a></div>
     <div class="background"><a href="link">erledigte Aufträge(*VAR*)</a></div>
 
 
-    <div class="background" id="columns">
-        <div class="left column">
 
-            <table class="box">
-                <tr>
-                    <th>Auftragsnummer <span class="text2">{{ entity.id }}</span></th>
-                    <th>Status
+        <div class="job background">
+            <div class="job_header_left">
+                <div class="box"><h3>Auftragsnummer</h3> {{ entity.id }}</div>
+                <div class="box"><h3>Status</h3>
+
                         {% if entity.jobState.id == 1 %}
-                        <span class="text2">{{entity.jobState}}</span><img class="bild" src="/img/glyphicons_png/glyphicons_204_unlock.png"/>
+                        {{entity.jobState}} <img class="bild" src="/img/glyphicons_png/glyphicons_204_unlock.png"/>
                         {% elseif entity.jobState.id == 2 %}
-                        <span class="text2">{{entity.jobState}}</span><img class="bild" src="/img/glyphicons_png/glyphicons_203_lock.png"/>
+                       {{entity.jobState}} <img class="bild" src="/img/glyphicons_png/glyphicons_203_lock.png"/>
                         {% endif %}
-                    </th>
-                    <th>Typ <span class="text2">(*VAR*)</span></th>
-                </tr><tr>
-                    <th>Ende  <span class="text2">{{ entity.end|date("d.m.y H:i") }}</span></th>
-                    <th>Beginn  <span class="text2">{{ entity.start|date("d.m.y H:i") }}</span></th>
-                    <th></th>
-                </tr>
-            </table>
 
+                </div>
+                <div class="box"><h3>Typ</h3> {{entity.jobType}} </div>
 
-            <div class="box">
-                Auftrag <b>{{ entity.description }}
+                <div class="box"><h3>Ende</h3>{{ entity.end|date("d.m.y H:i") }}</div>
+                <div class="box"><h3>Beginn</h3>{{ entity.start|date("d.m.y H:i") }} </div>
             </div>
+            <div class="job_header_right">
 
-            <div class="box">
-                Dateien
+                <div class="box">
 
-                <table class="downloadbox" frame="vsides" frame="hsides">
-                    <tr>
-                        <th>(*DATEINAME*)</th>
-                        <th>(*DATEIGRÖ?E*)</th>
-                        <th>(*ANSEHNBUTTON*)</th>
-                        <th>(*DOWN_BUTTON*)</th>
-                    </tr>
-                    <tr>
-                        <th>(*DATEINAME*)</th>
-                        <th>(*DATEIGRÖ?E*)</th>
-                        <th>(*ANSEHNBUTTON*)</th>
-                        <th>(*DOWN_BUTTON*)</th>
-                    </tr>
+                        <h3>Auftraggeber</h3>
+                        {{ entity.Address.customer.company }}
+                </div>
 
-                </table>
+                <div class="box"><h3> Adresse</h3>
 
-                >NEUE DATEI BUTTON<
+                        <address> {{ entity.Address.street }} {{ entity.Address.number  }}<br>
+                        {{ entity.Address.postcode }} {{ entity.Address.city  }} {{ entity.Address.destrict }} <br>
 
+                        {{ entity.Address.fon }} {{ entity.Address.fax }}
+                        </address>
+                </div>
+
+
+               <div class="box">
+                        (*GOOGLEMAPS*)
+               </div>
+            </div>
+            <div class="job_content">
+                <div class="box">
+                    <h3>Auftrag</h3> <br>{{ entity.description }}
+                </div>
+                <div class="box">
+                    <h3>Dateien</h3>
+                    <table class="filelist">
+                        <tr>
+                            <th>test.pdf</th>
+                            <td>100kb</td>
+                            <td><a href="#">ansehen</a></td>
+                            <td><a href="#">download</a> </td>
+                        </tr>
+                        <tr>
+                            <th>test.pdf</th>
+                            <td>100kb</td>
+                            <td><a href="#">ansehen</a></td>
+                            <td><a href="#">download</a> </td>
+                        </tr>
+                        {% for file in entity.file %}
+                            <tr>
+                                <td>file.name</td>
+                                <td>(*DATEIGRÖ?E*)</td>
+                                <td>(*ANSEHNBUTTON*)</td>
+                                <td>(*DOWN_BUTTON*)</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="box">
+                    <button>Neue Datei</button>
+                </div>
+            </div>
+            <div class="job_fooder">
+                <div class="dates">
+                    <div class="box">
+                        erstellt am {{ entity.createdAt|date("d.m.y H:i") }}
+                    </div>
+                    <div class="box">
+                        zuletzt geändert am {{ entity.updatedAt|date("d.m.y H:i") }}
+                    </div>
+                </div>
+
+                <ul class="job_fooder_buttons_left">
+                    <li><button>zurück</button></li>
+                    <li><button>ändern</button></li>
+                </ul>
+                <ul class="job_fooder_buttons_right">
+
+                    <li><button>Auftrag abschließen</button></li>
+                </ul>
             </div>
         </div>
 
-        <div class="right column">
 
-            <table class="box">
-                <tr>
-                    <th>Auftraggeber</th>
-                    <th><span class="text2">(*KUNDENNAME*)</span></th>
-                </tr>
-                <tr>
-                    <th>Adresse</th>
-                    <th><span class="text2">(*KUNDENADRESSE*)</span></th>
-                </tr>
-            </table>
-            <div class="box">
-                (*GOOGLEMAPS*)
-            </div>
-        </div>
+
     </div>
-</div>
+
+    <div class="background tasks">
+        <h3>Termine</h3>
+    </div>
+
+    <div class="background material">
+        <h3>Material</h3>
+    </div>
 
 {% endblock %}
 

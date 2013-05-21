@@ -56,7 +56,10 @@ class Invoice
     {
         $this->job = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
+    public function __toString(){
+        return $this->getNumber();
+    }
 
     /**
      * Get id

@@ -102,11 +102,7 @@ body {
     padding:5px;
     margin-bottom:30px
 }
-.box {
-    text-align:left;
-    margin-bottom:30px; 
-    width:100
-}
+
 .downloadbox {
     text-align:left;
     margin:10px;
@@ -120,7 +116,7 @@ body {
 #columns .column {
     position: relative;
     padding: 1%;
-    <!-- border: solid 1px lightgrey;-->
+    xborder: solid 1px lightgrey;
 }
 #columns .left {
     float: left;
@@ -137,9 +133,8 @@ body {
     height:1em;
 }
 
-<!-- dropdown-->
-
-.dropdown-list {
+/* dropdown */
+div.dropdown-list {
     height:200px;
     width:200px;
     border:1px solid #ccc;
@@ -151,7 +146,112 @@ body {
     margin:5px;
 }
 
-<!-- Text Styles-->
+
+
+div.job div{
+    display: inline;
+}
+
+div.job h3 {
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: helvetica,arial,sans-serif;
+    display: inline;
+    margin-right: 10px;
+    line-height: 0;
+
+    padding: 0;
+}
+
+div.job {
+    font-size: 12pt;
+    font-weight: normal;
+    font-family: helvetica,arial,sans-serif;
+}
+
+div.job .box{
+    min-height: 40px;
+}
+
+
+
+div.job_header_left{
+    width: 60%;
+    float: left;
+}
+div.job_header_left .box{
+    width: 30%;
+    min-width: 180px;
+    display: inline-block;
+}
+
+div.job_header_right{
+    width: 33%;
+    float: right;
+}
+
+div.job_header_right .box{
+    width: 100%;
+    min-width: 150px;
+    display: block;
+}
+div.job_header_right .box address{
+    display: inline-table;
+
+}
+
+
+div.job_content{
+    float: left;
+    width: 60%;
+}
+
+div.job_content .box{
+    width: 100%;
+    min-width: 150px;
+    display: block;
+    min-height: 80px;
+}
+
+div.job_fooder{
+    border-top: 1px solid #808080;
+    float: right;
+    width: 100%;
+    display: block;
+}
+div.job_fooder .dates{
+    float: right;
+    font-size: 9pt;
+    color: darkgray;
+}
+div.job_fooder li{
+    list-style: none;
+    float: left;
+}
+div.job_fooder .job_fooder_buttons_left{
+    float: left;
+}
+div.job_fooder .job_fooder_buttons_right{
+    float: right;
+}
+
+table.filelist {
+    background-color: #ffffff;
+    border: 1px solid #808080;
+    float: right;
+    width: 90%;
+    color: darkgray;
+    font-size: 9pt;
+}
+table.filelist tr:hover{
+    color: cornflowerblue;
+}
+
+table.filelist th{
+    text-align: left;
+}
+
+/* Text Styles */
 
 .text1 {
     font-family:'Verdana';
@@ -162,3 +262,4 @@ body {
     font-size:1.2em;
     font-weight:lighter
 }
+

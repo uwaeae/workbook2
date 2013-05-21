@@ -26,7 +26,7 @@ class JobType extends AbstractType
             ->add('invoice')
             ->add('jobState')
             ->add('jobType')
-            ->add('store')
+            ->add('Address')
             ->add('user')
         ;
     }
