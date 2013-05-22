@@ -110,30 +110,8 @@ body {
     width:80%
 }
 
-#columns {
-    width: 99%;
-}
-#columns .column {
-    position: relative;
-    padding: 1%;
-    xborder: solid 1px lightgrey;
-}
-#columns .left {
-    float: left;
-    width: 60%;
-}
-#columns .right {
-    float: right;
-    width: 35%;
-}
 
-.bild {
-    margin-left:10px;
-    width:1em;
-    height:1em;
-}
-
-/* dropdown */
+/******************* dropdown ********************/
 div.dropdown-list {
     height:200px;
     width:200px;
@@ -146,6 +124,8 @@ div.dropdown-list {
     margin:5px;
 }
 
+
+/*************** Job Section *******************/
 
 
 div.job div{
@@ -251,15 +231,122 @@ table.filelist th{
     text-align: left;
 }
 
+/******************** Job Overview *********************/
+
+ul.job_overview li{
+    list-style: none;
+}
+
+a.job_overview_item_head{
+    display: block;
+    width: 100%;
+    line-height: 2em;
+    background-color: darkgray;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 18pt;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.50);
+    filter: dropshadow(color=rgba(0, 0, 0, 0.50), offx=1, offy=1);
+
+    vertical-align: middle;
+
+    background: rgb(201,201,201); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(201,201,201,1) 0%, rgba(163,163,163,1) 36%, rgba(153,153,153,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(201,201,201,1)), color-stop(36%,rgba(163,163,163,1)), color-stop(100%,rgba(153,153,153,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(201,201,201,1) 0%,rgba(163,163,163,1) 36%,rgba(153,153,153,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(201,201,201,1) 0%,rgba(163,163,163,1) 36%,rgba(153,153,153,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(201,201,201,1) 0%,rgba(163,163,163,1) 36%,rgba(153,153,153,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(201,201,201,1) 0%,rgba(163,163,163,1) 36%,rgba(153,153,153,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9c9c9', endColorstr='#999999',GradientType=0 ); /* IE6-9 */
+
+
+
+
+
+}
+a.job_overview_item_head.active,
+a.job_overview_item_head:hover{
+    background: rgb(201,201,201); /* Old browsers */
+    background: -moz-linear-gradient(top, rgb(26, 90, 138) 0%, rgb(23, 78, 118) 36%, rgb(21, 65, 97) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(26, 90, 138,1)), color-stop(36%,rgba(23, 78, 118,1)), color-stop(100%,rgba(21, 65, 97,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(26, 90, 138,1) 0%,rgba(23, 78, 118,1) 36%,rgba(21, 65, 97,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(26, 90, 138,1) 0%,rgba(23, 78, 118,1) 36%,rgba(21, 65, 97,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(26, 90, 138,1) 0%,rgba(23, 78, 118,1) 36%,rgba(21, 65, 97,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(26, 90, 138,1) 0%,rgba(23, 78, 118,1) 36%,rgba(21, 65, 97,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9c9c9', endColorstr='#999999',GradientType=0 ); /* IE6-9 */
+    color: #ffffff;
+    text-decoration: none;
+}
+
+
+div.job_overview_item_content ul{
+    margin: 0;
+    padding: 0;
+}
+div.job_overview_item_content ul li a.job_overview_item_head{
+    background: rgb(0,119,211); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(0, 119, 211, 0.54) 0%, rgba(99,198,237,0.54) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0, 119, 211, 0.54)), color-stop(100%,rgba(99,198,237,0.54))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, rgba(0, 119, 211, 0.54) 0%,rgba(99,198,237,0.54) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(0,119,211,0.54) 0%,rgba(99,198,237,0.54) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(0,119,211,0.54) 0%,rgba(99,198,237,0.54) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(0,119,211,0.54) 0%, rgba(99, 198, 237, 0.54) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0077d3', endColorstr='#63c6ed',GradientType=1 ); /* IE6-9 */
+    border-bottom: 1px solid #ffffff;
+}
+div.job_overview_item_content ul li a.job_overview_item_head:hover{
+    background: -moz-linear-gradient(left,  rgba(43,54,84,0.5) 0%, rgba(50,79,186,0.5) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(43,54,84,0.5)), color-stop(100%,rgba(50,79,186,0.5))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(43,54,84,0.5) 0%,rgba(50,79,186,0.5) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(43,54,84,0.5) 0%,rgba(50,79,186,0.5) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(43,54,84,0.5) 0%,rgba(50,79,186,0.5) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(43,54,84,0.5) 0%,rgba(50,79,186,0.5) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#802b3654', endColorstr='#80324fba',GradientType=1 ); /* IE6-9 */
+
+
+}
+
+
+
+ul.job_overview{
+    margin: 0;
+    padding: 0;
+}
+div.job_overview_item_content table{
+    width: 100%;
+}
+
+div.job_overview_item_content table tr:hover td{
+    background-color: rgba(0, 0, 0, 0.27);
+}
+
+div.job_overview_item_content table th:first-child{
+    border-left: 1px solid dimgray;
+
+}
+div.job_overview_item_content table th{
+    font-weight: normal;
+    background-color: #cccccc ;
+    border-bottom: 1px solid #a0a0a0;
+    border-right: 1px solid #a0a0a0;
+    text-align: left;
+}
+
+div.job_overview_item_content table td:first-child{
+    border-left: 1px solid #a0a0a0;
+
+}
+div.job_overview_item_content table td{
+    font-weight: normal;
+    background-color: #ffffff ;
+    border-bottom: 1px solid #a0a0a0;
+    border-right: 1px solid #a0a0a0;
+}
+
+
+
+
+
 /* Text Styles */
 
-.text1 {
-    font-family:'Verdana';
-    font-size:0.8em
-}
-.text2 {
-    font-family:georgia,garamond,serif;
-    font-size:1.2em;
-    font-weight:lighter
-}
 

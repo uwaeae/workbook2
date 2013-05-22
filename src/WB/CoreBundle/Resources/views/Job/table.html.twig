@@ -1,39 +1,57 @@
-<div class="tab-pane {% if active %}active{% endif %}" id="{{ key }}">
+<div class="job_overview_item_content {% if active %}active{% endif %}" id="{{ key }}">
 
     <table class="records_list">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Contactperson</th>
-            <th>Contactinfo</th>
-            <th>End</th>
-            <th>Start</th>
-            <th>Timeed</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th>{% trans %}job.number{% endtrans %}</th>
+            <th>{% trans %}job.customer{% endtrans %}</th>
+            <th>{% trans %}job.address{% endtrans %}</th>
+            <th>{% trans %}job.job{% endtrans %}</th>
+            <th>{% trans %}job.type{% endtrans %}</th>
+            <th>{% trans %}job.from{% endtrans %}</th>
+            <th>{% trans %}job.to{% endtrans %}</th>
+            <th>{% trans %}job.date{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr onclick="document.location = '{{ path('job_show', { 'id': entity.id }) }}'">
                 <td>{{ entity.id }}</td>
-                <td>{{ entity.contactPerson }}</td>
-                <td>{{ entity.contactInfo }}</td>
-                <td>{% if entity.end %}{{ entity.end|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.start %}{{ entity.start|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.timeed %}{{ entity.timeed|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.Address.customer.company }}</td>
+                <td> {{ entity.Address.street }} {{ entity.Address.number  }}<br>
+                    {{ entity.Address.postcode }} {{ entity.Address.city  }} {{ entity.Address.destrict }}</td>
                 <td>{{ entity.description }}</td>
+                <td>{{entity.jobType}}</td>
 
+                <td>{{ entity.start|date("d.m.y H:i") }} </td>
+                <td>{{ entity.end|date("d.m.y H:i") }}</td>
                 <td>
                     <ul>
-                        <li>
-                            <a href="{{ path('job_show', { 'id': entity.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('job_edit', { 'id': entity.id }) }}">edit</a>
-                        </li>
+                        {% if entity.tasks|length > 5  %}
+
+                        {% for task in entity.tasks|slice(entity.tasks|length - 5, entity.tasks|length -1) %}
+                            <li> {{ task.start|date("d.m.y H:i") }}
+                                {% for user in task.user %}
+                                    {{ user }}
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                        {% else %}
+                        {% for task in entity.tasks %}
+                            <li> {{ task.start|date("d.m.y H:i") }}
+                                {% for user in task.user %}
+                                    {{ user }}
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                        {% endif %}
+
                     </ul>
+
                 </td>
+
+
+
             </tr>
         {% endfor %}
         </tbody>

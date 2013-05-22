@@ -52,7 +52,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         $qb = $this
             ->createQueryBuilder('u');
-        $qb->innerJoin('u.groups','g','WITH',"g.role = 'ROLE_WORKER'");
+        $qb->innerJoin('u.groups','g','WITH',"g.role = 'ROLE_USER'");
         return $qb->getQuery()->getResult();
     }
 

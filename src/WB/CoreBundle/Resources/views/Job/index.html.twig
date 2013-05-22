@@ -1,9 +1,11 @@
 {# src/WB/CoreBundle/Resurces/views/nav/index.html.twig #}
 {% extends '::base.html.twig' %}
-
 {% block stylesheets %}
     {{ parent() }}
-
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/jobindex.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block title %}Workbook 2.0 {% endblock %}
@@ -12,24 +14,49 @@
 {% block body %}
 
 
-    <div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
-    <ul class="nav nav-tabs">
-    {% for key,entities in job_array %}
-        <li {% if loop.first %}class="active"{% endif %}><a href="#{{ key }}" data-toggle="tab">{{ key|trans }} </a></li>
-    {% endfor %}
+     <!-- Only required for left/right tabs -->
+    <ul class="job_overview">
+        <li >
+            <a href="#ownJobs"    data-toggle="ownJobs" class="job_overview_item_head ">
+
+                {% trans %}ownJobs{% endtrans %} ({{ ownJobs|length }}) </a>
+            {% include 'WBCoreBundle:Job:table.html.twig'
+            with {'key': 'ownJobs','entities': ownJobs,'active': 'true'}
+            %}
+        </li>
+        <li >
+            <a href="#openJobs"    data-toggle="openJobs" class="job_overview_item_head ">
+
+                {% trans %}openJobs{% endtrans %} ({{ openJobs|length }}) </a>
+            {% include 'WBCoreBundle:Job:table.html.twig'
+            with {'key': 'openJobs','entities': openJobs,'active': true}
+            %}
+        </li>
+
+        <li >
+            <a href="#sheduledJobs"    data-toggle="sheduledJobs" class="job_overview_item_head ">
+
+                {% trans %}sheduledJobs{% endtrans %} </a>
+            <div class="job_overview_item_content " id="sheduledJobs">
+            <ul>
+                {% for key,entities in sheduledJobs %}
+                <li >
+                    <a href="#{{ key }}"    data-toggle="{{key  }}" class="job_overview_item_head ">
+
+                        {{ key|trans }}  ({{ entities|length }}) </a>
+                        {% include 'WBCoreBundle:Job:table.html.twig'
+                            with {'key': key,'entities': entities,'active': loop.first}
+                        %}
+                </li>
+                {% endfor %}
+            </ul>
+            <div>
+
+        </li>
+
     </ul>
-        <div class="tab-content">
-
-            {% for key,entities in job_array %}
-
-                {% include 'WBCoreBundle:Job:table.html.twig'
-                with {'key': key,'entities': entities,'active': loop.first}
-                %}
 
 
-
-            {% endfor %}
-    </div>
 
 
 

@@ -3,6 +3,8 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
 
+
+
             <!-- Navigation -->
             <trans-unit id="1000">
                 <source>navigation.calendar</source>
@@ -23,6 +25,48 @@
             <trans-unit id="1004">
                 <source>navigation.customers</source>
                 <target>Kunden</target>
+            </trans-unit>
+
+            <!-- Job -->
+            <trans-unit id="2001">
+                <source>job.number</source>
+                <target>Nummer</target>
+            </trans-unit>
+            <trans-unit id="2002">
+                <source>job.customer</source>
+                <target>Kunden</target>
+            </trans-unit>
+            <trans-unit id="2003">
+                <source>job.address</source>
+                <target>Nummer</target>
+            </trans-unit>
+            <trans-unit id="2004">
+                <source>job.job</source>
+                <target>Auftrag</target>
+            </trans-unit>
+            <trans-unit id="2005">
+                <source>job.type</source>
+                <target>Typ</target>
+            </trans-unit>
+            <trans-unit id="2006">
+                <source>job.from</source>
+                <target>vom</target>
+            </trans-unit>
+            <trans-unit id="2007">
+                <source>job.to</source>
+                <target>Bis</target>
+            </trans-unit>
+            <trans-unit id="2008">
+                <source>job.date</source>
+                <target>Termine</target>
+            </trans-unit>
+            <trans-unit id="2009">
+                <source>ownJobs</source>
+                <target>eigene Aufträge</target>
+            </trans-unit>
+            <trans-unit id="2010">
+                <source>openJobs</source>
+                <target>offene Aufträge</target>
             </trans-unit>
 
 

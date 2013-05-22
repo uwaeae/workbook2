@@ -113,7 +113,7 @@ class JobRepository extends EntityRepository
         $qb = $this->createQueryBuilder('j');
         $qb->leftJoin('j.Tasks','t' )
             ->innerJoin('t.user','u','WITH',' u.id ='.$UserID)
-            ->where($qb->expr()->isNull('t.scheduled'))
+            ->where($qb->expr()->eq('t.scheduled','TRUE'))
             ->andWhere('j.jobState = 1')
             ->orderby('j.end');
         return $qb->getQuery()->getResult();

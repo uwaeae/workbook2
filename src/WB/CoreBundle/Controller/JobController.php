@@ -29,20 +29,23 @@ class JobController extends Controller
 
         $job_array = array();
         $em = $this->getDoctrine()->getManager();
-        $job_array['ownJobs'] = $em->getRepository('WBCoreBundle:Job')->getOwnJobs(9);//$user->getID());
-        $job_array['openJobs'] = $em->getRepository('WBCoreBundle:Job')->getOpenJobs();
+        $ownJobs = $em->getRepository('WBCoreBundle:Job')->getOwnJobs(9);//$user->getID());
+        $openJobs = $em->getRepository('WBCoreBundle:Job')->getOpenJobs();
 
         $workers = $em->getRepository('AcmeUserBundle:User')->getWorkers();
         $sheduledJobs = array();
         foreach ( $workers as $worker ){
-            $sheduledJobs[] = $em->getRepository('WBCoreBundle:Job')->getSheduledJobsByUser($worker->getId());
+            $sheduledJobs[$worker->getUsername()] = $em->getRepository('WBCoreBundle:Job')->getSheduledJobsByUser($worker->getId());
         }
+
        // $job_array['sheduledJobs'] = $sheduledJobs;
 
 
 
         return array(
-            'job_array' => $job_array,
+            'ownJobs' => $ownJobs,
+            'openJobs' =>$openJobs,
+            'sheduledJobs' => $sheduledJobs,
         );
     }
 
