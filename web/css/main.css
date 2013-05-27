@@ -383,6 +383,93 @@ div.job_overview_item_content table td{
 }
 
 
+/******************* dropdown ********************/
+div.dropdown-list {
+    height:200px;
+    width:200px;
+    border:1px solid #ccc;
+    <!--font:16px/26px Georgia, Garamond, Serif;-->
+    overflow:auto;
+}
+
+.dropdown-box{
+    margin:5px;
+}
+
+div.dropdown{
+    width: 20%;
+    height: 40px;
+}
+
+
+div.dropdownList {
+    height:200px;
+    width:350px;
+    border:1px solid #ccc;
+    /*font:16px/26px Georgia, Garamond, Serif;*/
+    overflow:auto;
+    background-color: whitesmoke;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 5px;
+}
+div.dropdown-button{
+    border: 1px solid lightgrey;
+    background-color: whitesmoke;
+    padding: 4px 8px;
+}
+.dropdownBox{
+    margin:5px;
+    padding: 10px;
+
+}
+
+#dropdownHead{
+   background-color: blue;
+    border: 1px solid lightgray;
+    color: white;
+    height: 3.5em;
+}
+
+.dropdownHeadHeight{
+    height: 35px;
+}
+
+#dropdownHead .left {
+    float: left;
+   
+    font-family: 'Verdana';
+    font-weight: bold; 
+    font-size: 3em;
+
+    text-align: start;
+
+
+}
+#dropdownHead .right {
+    float: right;
+    width: 54%;
+    text-align: start;
+
+}
+
+
+
+
+.dropdownBottem{
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}
+.dropdownBottemText{
+    color: lightskyblue;
+    padding: 10px;
+}
+.dropdownBottemAdresse{
+    padding: 10px;
+}
+
 
 
 
