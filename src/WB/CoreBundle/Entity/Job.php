@@ -156,6 +156,11 @@ class Job
      */
     protected $Tasks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Itementry", mappedBy="job")
+     */
+    protected $Items;
+
 
 
 
@@ -186,7 +191,10 @@ class Job
         $this->invoice = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
+    public function __toString(){
+        return $this->getID().'';
+    }
 
     /**
      * Get id

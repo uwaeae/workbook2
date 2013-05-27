@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use WB\CoreBundle\Entity\Job;
 use WB\CoreBundle\Form\JobType;
 
@@ -29,14 +30,18 @@ class JobController extends Controller
 
         $job_array = array();
         $em = $this->getDoctrine()->getManager();
-        $ownJobs = $em->getRepository('WBCoreBundle:Job')->getOwnJobs(9);//$user->getID());
+        $ownJobs = $em->getRepository('WBCoreBundle:Job')->getOwnJobs($user->getID());//$user->getID());
         $openJobs = $em->getRepository('WBCoreBundle:Job')->getOpenJobs();
 
         $workers = $em->getRepository('AcmeUserBundle:User')->getWorkers();
         $sheduledJobs = array();
         foreach ( $workers as $worker ){
-            $sheduledJobs[$worker->getUsername()] = $em->getRepository('WBCoreBundle:Job')->getSheduledJobsByUser($worker->getId());
+            $sheduledJobs[$worker->getUsername()] = array(
+                'jobs'=> $em->getRepository('WBCoreBundle:Job')->getSheduledJobsByUser($worker->getId()),
+                'user'=> $worker,
+            );
         }
+        $finishedJobs = $em->getRepository('WBCoreBundle:Job')->getFinishedJobs();
 
        // $job_array['sheduledJobs'] = $sheduledJobs;
 
@@ -46,8 +51,112 @@ class JobController extends Controller
             'ownJobs' => $ownJobs,
             'openJobs' =>$openJobs,
             'sheduledJobs' => $sheduledJobs,
+            'finishedJobs' => $finishedJobs,
         );
     }
+    /**
+     * Render Job Table for the Job overview
+     *
+     * @Route("/table/{type}", name="job_table")
+     * @Method("get")
+
+     */
+    public function tableAction(Request $request,$type)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $result = array();
+        $user = $this->get('security.context')->getToken()->getUser();
+        switch($type){
+            case 'ownJobs':
+                $result = $em->getRepository('WBCoreBundle:Job')->getOwnJobs($user->getID());
+                break;
+            case 'openJobs':
+                $result = $em->getRepository('WBCoreBundle:Job')->getOpenJobs();
+                break;
+            case 'sheduledJobs':
+                $username = $request->get('user');
+                $user = $em->getRepository('AcmeUserBundle:User')->findOneBy(array('username'=>$username));
+                if($user) $result = $em->getRepository('WBCoreBundle:Job')->getSheduledJobsByUser($user->getID());
+                break;
+
+            case 'workedJobs':
+                if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
+                    $result = $em->getRepository('WBCoreBundle:Job')->getWorkedJobs();
+                }else{
+                    $result = $em->getRepository('WBCoreBundle:Job')->getWorkedJobsByUser($user->getID());
+                }
+                break;
+            case 'finishedJobs':
+                if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
+                    $result = $em->getRepository('WBCoreBundle:Job')->getFinishedJobs();
+                }
+                break;
+
+        }
+        $json = array();
+        foreach($result as $job){
+            $j = array();
+            $j['id'] = $job->getID();
+
+            $j['customer'] = $job->getAddress()->getCustomer()->getCompany();
+            $j['address1'] = $job->getAddress()->getStreet().' '.$job->getAddress()->getNumber();
+            $j['address2'] = $job->getAddress()->getPostcode().' '.$job->getAddress()->getCity().' '.$job->getAddress()->getDestrict();
+            $j['description'] = $job->getDescription();
+            $j['type'] = $job->getJobtype()->getID();
+            $j['type_name'] = $job->getJobtype()->getName();
+            $j['from'] = $job->getStart()->format("d.m.y H:i");
+            $j['to'] = $job->getEnd()->format("d.m.y H:i");
+
+
+            $json[] = $j;
+        }
+
+
+        $response = new Response( json_encode($json));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+
+    }
+
+
+
+    /**
+     * Render Tasks for the Job overview
+     *
+     * @Route("/scheduledTasks", name="job_scheduledTasks")
+     * @Method("post")
+     */
+    public function scheduledTasksAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $jobs = $request->request->get('jobs');
+        $json = array();
+        foreach($jobs as $job){
+            $tasks = $em->getRepository('WBCoreBundle:Task')->getScheduledTasksForJob($job);
+            $ts =array();
+            foreach($tasks as $task){
+                $t= array();
+                $t['date'] = $task->getStart()->format("d.m.y H:i");
+                $u = '';
+                foreach($task->getUser() as $user){
+                    $u.= ' '.$user->getUsername();
+                }
+                $t['user'] = $u;
+                $ts[] = $t;
+            }
+            $json[$job] = $ts;
+        }
+
+        $response = new Response( json_encode($json));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+
+
 
     /**
      * Finds and displays a Job entity.

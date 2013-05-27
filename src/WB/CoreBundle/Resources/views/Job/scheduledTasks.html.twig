@@ -1,0 +1,10 @@
+<ul>
+    {% for task in tasks %}
+    <li> {{ task.start|date("d.m.y H:i") }}
+        {% for user in task.user %}
+            {{ user }}
+        {% endfor %}
+    </li>
+    {% endfor %}
+
+</ul>

@@ -156,7 +156,8 @@ class JobRepository extends EntityRepository
 
     public function getFinishedJobs(){
         $qb = $this->createQueryBuilder('j');
-        $qb->leftJoin('j.Invoices','i')
+        $qb->leftJoin('j.invoice','i')
+            ->where('j.jobState = 2')
             ->andWhere('i.id is null ')
             ->orderby('j.id');
         return $qb->getQuery()->getResult();
@@ -169,7 +170,7 @@ class JobRepository extends EntityRepository
     public function getCompletedJobs(){
         $qb = $this->createQueryBuilder('j');
         $qb->where('j.job_state_id = 2')
-            ->leftJoin('j.Invoices','i','ON','i.id is not null   ')
+            ->leftJoin('j.invoice','i','ON','i.id IS NOT NULL')
             ->orderby('j.end');
         return $qb->getQuery()->getResult();
 
@@ -178,5 +179,17 @@ class JobRepository extends EntityRepository
     public function getCountCompletedJobs(){
         return  $this->getCountCompletedJobs()->count();
     }
+
+    public function getScheduledTasksForJob($id){
+        $qb = $this->createQueryBuilder('t');
+        $qb->from('Tasks','t' )
+            ->innerJoin('t.job','j','WITH',' j.id ='.$id)
+            ->where($qb->expr()->eq('t.scheduled','TRUE'))
+            ->andWhere('j.jobState < 2');
+
+        return $qb->getQuery()->getResult();
+
+    }
+
 
 }

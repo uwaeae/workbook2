@@ -25,8 +25,8 @@ class TaskType extends AbstractType
             ->add('updatedAt')
             ->add('updatedFrom')
             ->add('user')
-            ->add('job')
-            ->add('taskType')
+            //->add('job')
+            //->add('taskType')
         ;
     }
 

@@ -12,7 +12,7 @@
 {% block title %}Workbook 2.0 {% endblock %}
 
 {% block body %}
-<div class="text1">
+
     {% render 'WBCoreBundle:Job:dropdown' with {'id': entity.id } %}
     <div class="background"><a href="link">offene Aufträge in der Filiale (*VAR*)</a></div>
     <div class="background"><a href="link">erledigte Aufträge(*VAR*)</a></div>
@@ -88,7 +88,7 @@
                     </table>
                 </div>
                 <div class="box">
-                    <button>Neue Datei</button>
+                    <button class="btn">Neue Datei</button>
                 </div>
             </div>
             <div class="job_fooder">
@@ -102,26 +102,97 @@
                 </div>
 
                 <ul class="job_fooder_buttons_left">
-                    <li><button>zurück</button></li>
-                    <li><button>ändern</button></li>
+                    <li><button class="btn">zurück</button></li>
+                    <li><button class="btn">ändern</button></li>
                 </ul>
                 <ul class="job_fooder_buttons_right">
 
-                    <li><button>Auftrag abschließen</button></li>
+                    <li><button class="btn">Auftrag abschließen</button></li>
                 </ul>
             </div>
         </div>
 
 
 
-    </div>
+
 
     <div class="background tasks">
         <h3>Termine</h3>
+        <ul>
+            <li><button class="btn" data-url="{{ path('job_edit', { 'id': entity.id }) }}">Neuer Termin</button> </li>
+        </ul>
+
+        <table class="job_task_table">
+            {% for task in entity.tasks  %}
+                <tr>
+                    <th> {% trans %}task.start{% endtrans %}</th>
+                    <td>{{ task.start|date("d.m.y H:i")  }}</td>
+                    <th>{% trans %}task.end{% endtrans %}</th>
+                    <td>{{ task.end|date("d.m.y H:i")  }}</td>
+                    <th>{% trans %}task.scheduled{% endtrans %}</th>
+                    <td>
+                        <ul>
+                        {% for user in task.user %}
+                        <li>{{ user.username }}</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <th>{% trans %}task.created{% endtrans %}</th>
+                    <td>{{ task.createdAt|date("d.m.y H:i")  }}</td>
+                    <td>
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <a class="btn btn-small" href="{{ path('task_edit', { 'id': task.id }) }}"><i class=" icon-wrench"></i> {% trans %}edit{% endtrans %}</a>
+                                <form>
+                                    <submit class="btn btn-small" href="#"><i class=" icon-remove"></i> {% trans %}delete{% endtrans %}</submit>
+                                </form>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+
     </div>
 
     <div class="background material">
         <h3>Material</h3>
+        <ul>
+            <li><button class="btn" data-url="{{ path('job_edit', { 'id': entity.id }) }}">Bearbeiten</button> </li>
+        </ul>
+
+        <table class="job_task_table">
+            {% for task in entity.tasks  %}
+                <tr>
+                    <th> {% trans %}task.start{% endtrans %}</th>
+                    <td>{{ task.start|date("d.m.y H:i")  }}</td>
+                    <th>{% trans %}task.end{% endtrans %}</th>
+                    <td>{{ task.end|date("d.m.y H:i")  }}</td>
+                    <th>{% trans %}task.scheduled{% endtrans %}</th>
+                    <td>
+                        <ul>
+                            {% for user in task.user %}
+                                <li>{{ user.username }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <th>{% trans %}task.created{% endtrans %}</th>
+                    <td>{{ task.createdAt|date("d.m.y H:i")  }}</td>
+                    <td>
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <a class="btn btn-small" href="#"><i class=" icon-wrench"></i> {% trans %}edit{% endtrans %}</a>
+                                <a class="btn btn-small" href="#"><i class=" icon-remove"></i> {% trans %}delete{% endtrans %}</a>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 
 {% endblock %}

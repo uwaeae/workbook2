@@ -17,42 +17,60 @@
      <!-- Only required for left/right tabs -->
     <ul class="job_overview">
         <li >
-            <a href="#ownJobs"    data-toggle="ownJobs" class="job_overview_item_head ">
+            <a href="#ownJobs"    data-toggle="ownJobs" data-table="ownJobs"class="job_overview_item_head ">
 
-                {% trans %}ownJobs{% endtrans %} ({{ ownJobs|length }}) </a>
-            {% include 'WBCoreBundle:Job:table.html.twig'
-            with {'key': 'ownJobs','entities': ownJobs,'active': 'true'}
-            %}
+                {% trans %}ownJobs{% endtrans %} ({{ ownJobs|length }})  <img class="loading" src="{{ asset('img/ajax-loader.gif') }}"> </a>
+
+                {% include 'WBCoreBundle:Job:table.html.twig'
+                with {'id': 'ownJobs','mark':1}
+                %}
+
+
+
         </li>
         <li >
-            <a href="#openJobs"    data-toggle="openJobs" class="job_overview_item_head ">
+            <a href="#openJobs"    data-toggle="openJobs" data-table="openJobs" class="job_overview_item_head ">
 
-                {% trans %}openJobs{% endtrans %} ({{ openJobs|length }}) </a>
+                {% trans %}openJobs{% endtrans %} ({{ openJobs|length }})   <img class="loading" src="{{ asset('img/ajax-loader.gif') }}"> </a>
+
+
             {% include 'WBCoreBundle:Job:table.html.twig'
-            with {'key': 'openJobs','entities': openJobs,'active': true}
+            with {'id': 'openJobs','mark':1}
             %}
         </li>
 
         <li >
-            <a href="#sheduledJobs"    data-toggle="sheduledJobs" class="job_overview_item_head ">
+            <a href="#sheduledJobs"    data-toggle="sheduledJobs"  class="job_overview_item_head ">
 
                 {% trans %}sheduledJobs{% endtrans %} </a>
-            <div class="job_overview_item_content " id="sheduledJobs">
+            <div class="job_overview_item_content " id="sheduledJobs"  >
             <ul>
                 {% for key,entities in sheduledJobs %}
                 <li >
-                    <a href="#{{ key }}"    data-toggle="{{key  }}" class="job_overview_item_head ">
+                    <a href="#{{ key }}"  data-toggle="{{key}}" data-table="sheduledJobs" class="job_overview_item_head ">
 
-                        {{ key|trans }}  ({{ entities|length }}) </a>
-                        {% include 'WBCoreBundle:Job:table.html.twig'
-                            with {'key': key,'entities': entities,'active': loop.first}
-                        %}
+                    {{ entities.user.firstname }} {{ entities.user.lastname  }}  ({{ entities.jobs|length }})  <img class="loading" src="{{ asset('img/ajax-loader.gif') }}"> </a>
+
+                    {% include 'WBCoreBundle:Job:table.html.twig'
+                    with {'id': key ,'mark':1}
+                    %}
                 </li>
                 {% endfor %}
             </ul>
             <div>
 
         </li>
+        <li >
+            <a href="#finishedJobs"    data-toggle="finishedJobs" data-table="finishedJobs"  class="job_overview_item_head ">
+
+                {% trans %}finishedJobs{% endtrans %} ({{ finishedJobs|length }})   <img class="loading" src="{{ asset('img/ajax-loader.gif') }}"> </a>
+
+
+            {% include 'WBCoreBundle:Job:table.html.twig'
+            with {'id': 'finishedJobs','mark':0}
+            %}
+        </li>
+
 
     </ul>
 

@@ -1,6 +1,15 @@
-<div class="job_overview_item_content {% if active %}active{% endif %}" id="{{ key }}">
-
-    <table class="records_list">
+<div class="job_overview_item_content" id="{{ id }}" data-mark="{{ mark }}">
+<table class="records_list">
+    <colgroup>
+        <col width="2%">
+        <col width="8%">
+        <col width="10%">
+        <col width="40%">
+        <col width="5%">
+        <col width="8%">
+        <col width="8%">
+        <col width="10%">
+    </colgroup>
         <thead>
         <tr>
             <th>{% trans %}job.number{% endtrans %}</th>
@@ -14,46 +23,6 @@
         </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr onclick="document.location = '{{ path('job_show', { 'id': entity.id }) }}'">
-                <td>{{ entity.id }}</td>
-                <td>{{ entity.Address.customer.company }}</td>
-                <td> {{ entity.Address.street }} {{ entity.Address.number  }}<br>
-                    {{ entity.Address.postcode }} {{ entity.Address.city  }} {{ entity.Address.destrict }}</td>
-                <td>{{ entity.description }}</td>
-                <td>{{entity.jobType}}</td>
-
-                <td>{{ entity.start|date("d.m.y H:i") }} </td>
-                <td>{{ entity.end|date("d.m.y H:i") }}</td>
-                <td>
-                    <ul>
-                        {% if entity.tasks|length > 5  %}
-
-                        {% for task in entity.tasks|slice(entity.tasks|length - 5, entity.tasks|length -1) %}
-                            <li> {{ task.start|date("d.m.y H:i") }}
-                                {% for user in task.user %}
-                                    {{ user }}
-                                {% endfor %}
-                            </li>
-                        {% endfor %}
-                        {% else %}
-                        {% for task in entity.tasks %}
-                            <li> {{ task.start|date("d.m.y H:i") }}
-                                {% for user in task.user %}
-                                    {{ user }}
-                                {% endfor %}
-                            </li>
-                        {% endfor %}
-                        {% endif %}
-
-                    </ul>
-
-                </td>
-
-
-
-            </tr>
-        {% endfor %}
         </tbody>
-    </table>
+</table>
 </div>

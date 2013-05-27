@@ -2,6 +2,15 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <!-- Default -->
+            <trans-unit id="0001">
+                <source>edit</source>
+                <target>Bearbeiten</target>
+            </trans-unit>
+             <trans-unit id="0002">
+                <source>delete</source>
+                <target>Löschen</target>
+            </trans-unit>
 
 
 
@@ -67,6 +76,37 @@
             <trans-unit id="2010">
                 <source>openJobs</source>
                 <target>offene Aufträge</target>
+            </trans-unit>
+
+
+            <!-- Task -->
+            <trans-unit id="3001">
+                <source>tast.start</source>
+                <target>Start</target>
+            </trans-unit>
+            <trans-unit id="3002">
+                <source>tast.end</source>
+                <target>Ende</target>
+            </trans-unit>
+            <trans-unit id="3003">
+                <source>tast.scheduled</source>
+                <target>Eingeplant</target>
+            </trans-unit>
+            <trans-unit id="3004">
+                <source>tast.created</source>
+                <target>Erstellt</target>
+            </trans-unit>
+            <trans-unit id="3005">
+                <source>tast.number</source>
+                <target>Nummer</target>
+            </trans-unit>
+            <trans-unit id="3006">
+                <source>tast.number</source>
+                <target>Nummer</target>
+            </trans-unit>
+            <trans-unit id="3007">
+                <source>tast.number</source>
+                <target>Nummer</target>
             </trans-unit>
 
 

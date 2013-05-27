@@ -231,7 +231,43 @@ table.filelist th{
     text-align: left;
 }
 
+/******************* Job Show Task ********************/
+div.tasks{
+    width: 100%;
+}
+
+table.job_task_table{
+    width: 100%;
+}
+table.job_task_table tr:hover th,
+table.job_task_table tr:hover td{
+    background-color: rgba(0, 0, 255, 0.27);
+}
+
+
+
+
 /******************** Job Overview *********************/
+/* ajax stuff */
+img.loading{
+    display: none;
+    float: right;
+    height: 2em;
+    margin-right: 20px;
+
+}
+
+.mark{
+    background-color: rgba(255, 61, 60, 0.49);
+    color: #000000;
+}
+div.job_overview_item_content table tr:hover td.mark{
+    background-color: rgba(148, 0, 0, 0.5);
+}
+
+
+/* Table and List */
+
 
 ul.job_overview li{
     list-style: none;
@@ -318,6 +354,7 @@ div.job_overview_item_content table{
 
 div.job_overview_item_content table tr:hover td{
     background-color: rgba(0, 0, 0, 0.27);
+
 }
 
 div.job_overview_item_content table th:first-child{
@@ -338,9 +375,11 @@ div.job_overview_item_content table td:first-child{
 }
 div.job_overview_item_content table td{
     font-weight: normal;
-    background-color: #ffffff ;
+
     border-bottom: 1px solid #a0a0a0;
     border-right: 1px solid #a0a0a0;
+    padding-right: 4px;
+    padding-left: 4px;
 }
 
 
