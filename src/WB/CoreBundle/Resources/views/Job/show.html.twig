@@ -14,9 +14,7 @@
 {% block body %}
 
     {% render 'WBCoreBundle:Job:dropdown' with {'id': entity.id } %}
-    <div class="background"><a href="link">offene Aufträge in der Filiale (*VAR*)</a></div>
-    <div class="background"><a href="link">erledigte Aufträge(*VAR*)</a></div>
-
+    
 
 
         <div class="job background">
@@ -25,9 +23,9 @@
                 <div class="box"><h3>Status</h3>
 
                         {% if entity.jobState.id == 1 %}
-                        {{entity.jobState}} <img class="bild" src="/img/glyphicons_png/glyphicons_204_unlock.png"/>
+                        {{entity.jobState}} <img src="/img/glyphicons_png/glyphicons_204_unlock.png"/>
                         {% elseif entity.jobState.id == 2 %}
-                       {{entity.jobState}} <img class="bild" src="/img/glyphicons_png/glyphicons_203_lock.png"/>
+                       {{entity.jobState}} <img src="/img/glyphicons_png/glyphicons_203_lock.png"/>
                         {% endif %}
 
                 </div>
@@ -55,7 +53,11 @@
 
 
                <div class="box">
-                        (*GOOGLEMAPS*)
+                        
+                   <div>
+                   GOOGLEMAPS
+                   </div>
+                   
                </div>
             </div>
             <div class="job_content">
@@ -68,13 +70,13 @@
                         <tr>
                             <th>test.pdf</th>
                             <td>100kb</td>
-                            <td><a href="#">ansehen</a></td>
+                            <td><a href="#"><img src="/img/glyphicons_png/glyphicons_051_eye_open.png"/> ansehen</a></td>
                             <td><a href="#">download</a> </td>
                         </tr>
                         <tr>
                             <th>test.pdf</th>
                             <td>100kb</td>
-                            <td><a href="#">ansehen</a></td>
+                            <td><a href="#"><img src="/img/glyphicons_png/glyphicons_051_eye_open.png"/> ansehen</a></td>
                             <td><a href="#">download</a> </td>
                         </tr>
                         {% for file in entity.file %}
@@ -88,7 +90,7 @@
                     </table>
                 </div>
                 <div class="box">
-                    <button class="btn">Neue Datei</button>
+                    <button class="btn"><img src="/img/glyphicons_png/glyphicons_062_paperclip.png"/> Neue Datei</button>
                 </div>
             </div>
             <div class="job_fooder">

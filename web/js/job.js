@@ -4,11 +4,12 @@
  */
 
 
+
 $(document).ready(function(){
-   $('.dropdown-list').hide();
+   $('div.dropdownList').hide();
    $('.dropdown-button').click(function(){
        
-        $('.dropdown-list').slideToggle();
+        $(this).parents().find('div.dropdownList').slideToggle();
    });
    
 });
