@@ -83,6 +83,15 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
+     * @var boolean $isUser
+     *
+     * @ORM\Column(name="is_user", type="boolean", nullable=true)
+     */
+    private $isUser;
+
+
+
+    /**
      * @var string $settings
      *
      * @ORM\Column(name="settings", type="string", length=255, nullable=true)
@@ -766,5 +775,28 @@ class User implements UserInterface, \Serializable
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Set isUser
+     *
+     * @param boolean $isUser
+     * @return User
+     */
+    public function setIsUser($isUser)
+    {
+        $this->isUser = $isUser;
+    
+        return $this;
+    }
+
+    /**
+     * Get isUser
+     *
+     * @return boolean 
+     */
+    public function getIsUser()
+    {
+        return $this->isUser;
     }
 }
