@@ -659,4 +659,37 @@ class Job
     {
         return $this->Tasks;
     }
+
+    /**
+     * Add Items
+     *
+     * @param WB\CoreBundle\Entity\Itementry $items
+     * @return Job
+     */
+    public function addItem(\WB\CoreBundle\Entity\Itementry $items)
+    {
+        $this->Items[] = $items;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Items
+     *
+     * @param WB\CoreBundle\Entity\Itementry $items
+     */
+    public function removeItem(\WB\CoreBundle\Entity\Itementry $items)
+    {
+        $this->Items->removeElement($items);
+    }
+
+    /**
+     * Get Items
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getItems()
+    {
+        return $this->Items;
+    }
 }

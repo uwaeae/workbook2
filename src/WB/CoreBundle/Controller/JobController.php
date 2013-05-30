@@ -2,6 +2,7 @@
 
 namespace WB\CoreBundle\Controller;
 
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -176,9 +177,78 @@ class JobController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        $scheduledTasks = $em->getRepository('WBCoreBundle:Task')->createQueryBuilder('t')
+            ->where('t.job = :job')
+            ->andWhere('t.scheduled = true')
+            ->setParameter('job', $entity->getID())
+            ->getQuery()->getResult();
+
+        $finishedTasks = $em->getRepository('WBCoreBundle:Task')->createQueryBuilder('t')
+            ->where('t.job = :job')
+            ->andWhere('t.scheduled = false')
+            ->setParameter('job', $entity->getID())
+            ->getQuery()->getResult();
+        $finishedTasksResult = array();
+        $work = 0;
+        $overtime = 0;
+        $part = 15; //todo einstellung zu welchen Stunden anteilen abgerechnet wird
+        foreach($finishedTasks as  $task){
+
+            $diff = date_diff($task->getStart(),$task->getEnd());
+            $Stunden = $diff->format('%h') - $task->getOvertime();
+            // Stunden Addierung wenn mehrere Tage gearbeitet wurde( kommt eingentlich nicht vor)
+            if ($diff->format('%d') > 0) {
+                $Stunden += $diff->format('%d') * 24;
+            }
+            // Minuten Berechnung in Stunden anteile
+            $Minuten = $diff->format('%i');
+
+            $Minuten = round(($Minuten - ($task->getBreak() * 15)) / $part, 0) * $part;
+            if ($Minuten != 0) $Stunden += round($Minuten / 60, 2);
+            $work += $Stunden + $task->getCorrectionTime();
+            $overtime += $task->getOvertime();
+            $result = array();
+            $result['task'] = $task;
+            $result['time'] = $Stunden + $task->getCorrectionTime();
+            $finishedTasksResult[] = $result;
+        }
+
+
+
+
+        $ItemsResult =  $em->getRepository('WBCoreBundle:Entry')->createQueryBuilder('e')
+            ->innerJoin('e.task','t','WITH','e.task = t.id')
+            ->innerJoin('e.item','i','WITH','i.id = e.item')
+            ->where('t.job = :job')
+            ->setParameter('job', $entity->getID())
+            ->getQuery()->getResult();
+        $Items = array();
+        foreach($ItemsResult as $item){
+            $i = $item->getItem();
+            if(isset($Items[$i->getId()])){
+                $Items[$i->getId()] = array(
+                    'amount'=>$item->getAmount() + $Items[$i->getId()]['amount'],
+                    'item'=> $i
+                );
+            }else{
+                $Items[$i->getId()] = array(
+                    'amount'=>$item->getAmount(),
+                    'item'=> $i
+                );
+            }
+
+
+        }
+
+
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'         => $entity,
+            'items'          => $Items,
+            'scheduledTasks' => $scheduledTasks,
+            'finishedTasks'  => $finishedTasksResult,
+            'work'           => $work,
+            'overtime'       => $overtime,
+            'delete_form'    => $deleteForm->createView(),
         );
     }
 
@@ -192,6 +262,20 @@ class JobController extends Controller
     {
         $entity = new Job();
         $form   = $this->createForm(new JobType(), $entity);
+
+        $form = $this->createFormBuilder($entity)
+            ->add('contactPerson')
+            ->add('contactInfo')
+            ->add('end')
+            ->add('start')
+            ->add('Address','hidden')
+            ->add('description')
+            ->add('jobType',null,array(
+                'data' => 1,))
+            ->getForm();
+
+
+
 
         return array(
             'entity' => $entity,

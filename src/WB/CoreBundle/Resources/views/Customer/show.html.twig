@@ -1,6 +1,20 @@
-<h1>Customer</h1>
+{% extends '::base.html.twig' %}
 
-<table class="record_properties">
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/job.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block title %}Workbook 2.0 {% endblock %}
+
+{% block body %}
+
+
+<table class="table">
     <tbody>
         <tr>
             <th>Id</th>
@@ -29,6 +43,7 @@
     </tbody>
 </table>
 
+
 <ul class="record_actions">
     <li>
         <a href="{{ path('customer') }}">
@@ -47,3 +62,55 @@
         </form>
     </li>
 </ul>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Number</th>
+        <th>Contact</th>
+        <th>Info</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>Destrict</th>
+        <th>Fon</th>
+        <th>Fax</th>
+        <th>Postcode</th>
+        <th>Createdat</th>
+        <th>Updatedat</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for address in entity.Address %}
+        <tr>
+            <td><a href="{{ path('address_show', { 'id': address.id }) }}">{{ address.id }}</a></td>
+            <td>{{ address.number }}</td>
+            <td>{{ address.contact }}</td>
+            <td>{{ address.info }}</td>
+            <td>{{ address.street }}</td>
+            <td>{{ address.city }}</td>
+            <td>{{ address.country }}</td>
+            <td>{{ address.destrict }}</td>
+            <td>{{ address.fon }}</td>
+            <td>{{ address.fax }}</td>
+            <td>{{ address.postcode }}</td>
+            <td>{% if address.createdAt %}{{ address.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if address.updatedAt %}{{ address.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('address_show', { 'id': address.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('address_edit', { 'id': address.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

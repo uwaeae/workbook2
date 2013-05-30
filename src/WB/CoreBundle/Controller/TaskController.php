@@ -61,11 +61,15 @@ class TaskController extends Controller
     /**
      * Displays a form to create a new Task entity.
      *
-     * @Route("/new", name="task_new")
+     * @Route("/new/{type}", name="task_new")
      * @Template()
      */
-    public function newAction()
+    public function newAction($type)
     {
+
+
+
+
         $entity = new Task();
         $form   = $this->createForm(new TaskType(), $entity);
 

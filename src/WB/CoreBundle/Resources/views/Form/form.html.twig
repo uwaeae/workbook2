@@ -1,0 +1,22 @@
+{% block datetime_widget %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        <input  class="datetimepicker" type="{{ type }}" {{ block("widget_attributes") }} value="" />
+    {% endspaceless %}
+{% endblock datetime_widget %}
+
+{% block date_widget %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+            <input  class="datepicker_date" type="{{ type }}" {{ block("widget_attributes") }} value="" />
+    {% endspaceless %}
+{% endblock date_widget %}
+
+
+{% block time_widget %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        <input  class="datepicker_time" type="{{ type }}" {{ block("widget_attributes") }} value="" />
+
+    {% endspaceless %}
+{% endblock time_widget %}

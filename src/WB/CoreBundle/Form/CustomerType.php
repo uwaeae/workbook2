@@ -16,7 +16,8 @@ class CustomerType extends AbstractType
             ->add('url')
             ->add('number')
             ->add('headoffice')
-        ;
+
+                    ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

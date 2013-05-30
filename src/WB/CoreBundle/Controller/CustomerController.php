@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use WB\CoreBundle\Entity\Customer;
 use WB\CoreBundle\Form\CustomerType;
 
@@ -56,6 +57,33 @@ class CustomerController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
+    }
+    /**
+     * Finds and displays a Customer entity.
+     *
+     * @Route("/search/{therm}", name="customer_search")
+     * @Template()
+     */
+    public function searchAction($therm)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->add('select', 'c,a')
+            ->add('from', 'WBCoreBundle:Customer c')
+            ->innerJoin('c.Address', 'a')
+            ->add('where', $qb->expr()->like('c.company', '?1'))
+
+                    ->setParameter('1', '%'.$therm.'%');
+        $result = $qb->getQuery()->getArrayResult();
+
+
+
+        $response = new Response( json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
     }
 
     /**

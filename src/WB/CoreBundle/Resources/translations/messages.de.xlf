@@ -11,9 +11,6 @@
                 <source>delete</source>
                 <target>Löschen</target>
             </trans-unit>
-
-
-
             <!-- Navigation -->
             <trans-unit id="1000">
                 <source>navigation.calendar</source>
@@ -47,7 +44,7 @@
             </trans-unit>
             <trans-unit id="2003">
                 <source>job.address</source>
-                <target>Nummer</target>
+                <target>Adresse</target>
             </trans-unit>
             <trans-unit id="2004">
                 <source>job.job</source>
@@ -77,37 +74,103 @@
                 <source>openJobs</source>
                 <target>offene Aufträge</target>
             </trans-unit>
+            <trans-unit id="2011">
+                <source>job.end</source>
+                <target>Ende</target>
+            </trans-unit>
+            <trans-unit id="2012">
+                <source>job.start</source>
+                <target>Beginn</target>
+            </trans-unit>
+            <trans-unit id="2013">
+                <source>job.jobnumber</source>
+                <target>Auftragsnummer</target>
+            </trans-unit>
+            <trans-unit id="2014">
+                <source>job.state</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="2015">
+                <source>job.company</source>
+                <target>Auftraggeber</target>
+            </trans-unit>
+            <trans-unit id="2016">
+                <source>job.contactPerson</source>
+                <target>Kontakt</target>
+            </trans-unit>
+            <trans-unit id="2017">
+                <source>job.contactInfo</source>
+                <target>Kontakt Info</target>
+            </trans-unit>
+            <trans-unit id="2018">
+                <source>job.Storenumber</source>
+                <target>Filialnummer </target>
+            </trans-unit>
 
 
             <!-- Task -->
             <trans-unit id="3001">
-                <source>tast.start</source>
+                <source>task.start</source>
                 <target>Start</target>
             </trans-unit>
             <trans-unit id="3002">
-                <source>tast.end</source>
+                <source>task.end</source>
                 <target>Ende</target>
             </trans-unit>
             <trans-unit id="3003">
-                <source>tast.scheduled</source>
+                <source>task.scheduled</source>
                 <target>Eingeplant</target>
             </trans-unit>
             <trans-unit id="3004">
-                <source>tast.created</source>
+                <source>task.created</source>
                 <target>Erstellt</target>
             </trans-unit>
             <trans-unit id="3005">
-                <source>tast.number</source>
+                <source>task.number</source>
                 <target>Nummer</target>
             </trans-unit>
             <trans-unit id="3006">
-                <source>tast.number</source>
-                <target>Nummer</target>
+                <source>task.description</source>
+                <target>Beschreibung</target>
             </trans-unit>
             <trans-unit id="3007">
-                <source>tast.number</source>
-                <target>Nummer</target>
+                <source>task.code</source>
+                <target>Artikelcode</target>
             </trans-unit>
+            <trans-unit id="3008">
+                <source>task.amount</source>
+                <target>Menge</target>
+            </trans-unit>
+            <trans-unit id="3009">
+                <source>task.work</source>
+                <target>Arbeiten</target>
+            </trans-unit>
+            <trans-unit id="3010">
+                <source>task.time</source>
+                <target>Stunden</target>
+            </trans-unit>
+            <trans-unit id="3011">
+                <source>task.normal_time</source>
+                <target>Stunden</target>
+            </trans-unit>
+            <trans-unit id="3012">
+                <source>task.overtime</source>
+                <target>Überstunden</target>
+            </trans-unit>
+            <trans-unit id="3013">
+                <source>task.summary_seperate</source>
+                <target>Gesamt (Einzeln) </target>
+            </trans-unit>
+            <trans-unit id="3014">
+                <source>task.summary</source>
+                <target>Gesamt</target>
+            </trans-unit>
+            <trans-unit id="3015">
+                <source>task.finish</source>
+                <target>Abschliesen</target>
+            </trans-unit>
+
+
 
 
         </body>

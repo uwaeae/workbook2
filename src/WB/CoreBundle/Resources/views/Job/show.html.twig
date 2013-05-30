@@ -37,18 +37,32 @@
             <div class="job_header_right">
 
                 <div class="box">
+                    <div>
+                        <h3>{% trans %}job.company{% endtrans %}</h3>
 
-                        <h3>Auftraggeber</h3>
-                        {{ entity.Address.customer.company }}
+                    </div>
+                    <div>
+                   {{ entity.contactPerson }}<br>
+                   {{ entity.contactInfo }}
+                    </div>
+
                 </div>
 
-                <div class="box"><h3> Adresse</h3>
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.address{% endtrans %}</h3>
+                    </div>
+                    <div>
+                        {{ entity.Address.customer.company }}<br>
+                        {% if  entity.Address.number %} {% trans %}job.Storenumber{% endtrans %} {{ entity.Address.number}} {% endif %}
+                        <address> {{ entity.Address.street }} <br>
+                            {{ entity.Address.postcode }} {{ entity.Address.city  }} {{ entity.Address.destrict }} <br>
 
-                        <address> {{ entity.Address.street }} {{ entity.Address.number  }}<br>
-                        {{ entity.Address.postcode }} {{ entity.Address.city  }} {{ entity.Address.destrict }} <br>
-
-                        {{ entity.Address.fon }} {{ entity.Address.fax }}
+                            Tel. {{ entity.Address.fon }}  <br>
+                            Fax. {{ entity.Address.fax }}
                         </address>
+                    </div>
+
                 </div>
 
 
@@ -121,25 +135,33 @@
     <div class="background tasks">
         <h3>Termine</h3>
         <ul>
-            <li><button class="btn" data-url="{{ path('job_edit', { 'id': entity.id }) }}">Neuer Termin</button> </li>
+            <li><a class="btn" href="{{ path('task_new', { 'type':'job' , 'id': entity.id }) }}">Neuer Termin</a> </li>
         </ul>
-
+        {% if scheduledTasks|length > 0 %}
         <table class="job_task_table">
-            {% for task in entity.tasks  %}
+            <thead>
                 <tr>
-                    <th> {% trans %}task.start{% endtrans %}</th>
+                <th> {% trans %}task.start{% endtrans %}</th>
+                <th>{% trans %}task.end{% endtrans %}</th>
+                <th>{% trans %}task.scheduled{% endtrans %}</th>
+                <th>{% trans %}task.created{% endtrans %}</th>
+                </tr>
+            </thead>
+
+            {% for task in scheduledTasks  %}
+
                     <td>{{ task.start|date("d.m.y H:i")  }}</td>
-                    <th>{% trans %}task.end{% endtrans %}</th>
+
                     <td>{{ task.end|date("d.m.y H:i")  }}</td>
-                    <th>{% trans %}task.scheduled{% endtrans %}</th>
+
                     <td>
                         <ul>
                         {% for user in task.user %}
-                        <li>{{ user.username }}</li>
+                        <li>{{ user.firstname }} {{ user.lastname }}</li>
                         {% endfor %}
                         </ul>
                     </td>
-                    <th>{% trans %}task.created{% endtrans %}</th>
+
                     <td>{{ task.createdAt|date("d.m.y H:i")  }}</td>
                     <td>
                         <div class="btn-toolbar">
@@ -148,6 +170,10 @@
                                 <form>
                                     <submit class="btn btn-small" href="#"><i class=" icon-remove"></i> {% trans %}delete{% endtrans %}</submit>
                                 </form>
+                                <form>
+                                    <submit class="btn btn-small" href="#"><i class=" icon-remove"></i> {% trans %}task.finish{% endtrans %}</submit>
+                                </form>
+
                             </div>
                         </div>
 
@@ -156,44 +182,108 @@
             {% endfor %}
         </table>
 
+        {% endif %}
+        <h3>Arbeiten</h3>
+
+        <table class="job_task_table">
+            <thead>
+            <tr>
+                <th > {% trans %}task.start{% endtrans %}</th>
+                <th >{% trans %}task.end{% endtrans %}</th>
+                <th >{% trans %}task.work{% endtrans %}</th>
+                <th >{% trans %}task.time{% endtrans %}</th>
+                <th>{% trans %}task.overtime{% endtrans %}</th>
+                <th >{% trans %}task.scheduled{% endtrans %}</th>
+                <th >{% trans %}task.created{% endtrans %}</th>
+            </tr>
+
+
+
+            </thead>
+            <tbody>
+            {% for task in finishedTasks  %}
+                <tr data-url="{{ path('task_edit', { 'id': task.task.id }) }}">
+
+                    <td>{{ task.task.start|date("d.m.y H:i")  }}</td>
+
+                    <td>{{ task.task.end|date("d.m.y H:i")  }}</td>
+
+                    <td>{{ task.task.info  }}</td>
+                    <td>{{ task.time}}</td>
+                    <td>{{ task.task.overtime  }}</td>
+                    <td>
+                        <ul>
+                            {% for user in task.task.user %}
+                                <li>{{ user.firstname }} {{ user.lastname }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+
+                    <td>{{ task.task.updatedAt|date("d.m.y H:i")  }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+
+                <th>{% trans %}task.summary_seperate{% endtrans %}</th>
+                <td>{{ work  }}</td>
+                <td>{{ overtime  }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+
+                <td></td>
+                <th>{% trans %}task.summary{% endtrans %}</th>
+                <td colspan="2">{{ work +  overtime}}</td>
+
+                <td></td>
+            </tr>
+            </tfoot>
+
+        </table>
 
 
     </div>
 
     <div class="background material">
         <h3>Material</h3>
-        <ul>
-            <li><button class="btn" data-url="{{ path('job_edit', { 'id': entity.id }) }}">Bearbeiten</button> </li>
-        </ul>
 
-        <table class="job_task_table">
-            {% for task in entity.tasks  %}
+
+        <table class="job_item_table">
+
+            <colgroup>
+                <col class="col1" >
+                <col class="col2" >
+                <col class="col3" >
+                <col class="col4" >
+                <col class="col5" >
+            </colgroup>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th colspan="2">{% trans %}task.amount{% endtrans %}</th>
+                <th>{% trans %}task.code{% endtrans %}</th>
+                <th>{% trans %}task.description{% endtrans %}</th>
+            </tr>
+
+            </thead>
+            <tbody
+            {% for item in items  %}
+
                 <tr>
-                    <th> {% trans %}task.start{% endtrans %}</th>
-                    <td>{{ task.start|date("d.m.y H:i")  }}</td>
-                    <th>{% trans %}task.end{% endtrans %}</th>
-                    <td>{{ task.end|date("d.m.y H:i")  }}</td>
-                    <th>{% trans %}task.scheduled{% endtrans %}</th>
-                    <td>
-                        <ul>
-                            {% for user in task.user %}
-                                <li>{{ user.username }}</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                    <th>{% trans %}task.created{% endtrans %}</th>
-                    <td>{{ task.createdAt|date("d.m.y H:i")  }}</td>
-                    <td>
-                        <div class="btn-toolbar">
-                            <div class="btn-group">
-                                <a class="btn btn-small" href="#"><i class=" icon-wrench"></i> {% trans %}edit{% endtrans %}</a>
-                                <a class="btn btn-small" href="#"><i class=" icon-remove"></i> {% trans %}delete{% endtrans %}</a>
-                            </div>
-                        </div>
-
-                    </td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.amount }}</td>
+                    <td style="border-left: none">{{ item.item.unit }}</td>
+                    <td>{{ item.item.code }}</td>
+                    <td>{{ item.item.description }}</td>
                 </tr>
             {% endfor %}
+            </tbody>
         </table>
     </div>
 
@@ -204,7 +294,9 @@
 <h1 style="background-color: black; outline:1px grey solid;">Job</h1>
 
 <div  style="background-color: black; outline:1px grey solid;">
-    <table class="record_properties"> 
+    <table class="record_properties">
+
+
         <tbody>
             <tr>
                 <th>Id</th>
