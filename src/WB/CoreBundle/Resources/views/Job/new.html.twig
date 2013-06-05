@@ -2,144 +2,151 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link href="/js/ckeditor/contents.css" rel="stylesheet" media="screen">
 
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="/js/jquery-ui-timepicker-addon.js"></script>
+    <script src="{{ asset('/js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/ckeditor/config.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/ckeditor/styles.js') }}" type="text/javascript"></script>
     <script src="{{ asset('/js/job_new.js') }}" type="text/javascript"></script>
+
+
 {% endblock %}
 
 {% block title %}Workbook 2.0 {% endblock %}
 {% block body %}
 
     {% form_theme form 'WBCoreBundle:Form:form.html.twig' %}
-<form action="{{ path('job_create') }}" method="post" {{ form_enctype(form) }}>
-{% if form_errors(form) %}
-    <div class=" label label-important">
-        {{ form_errors(form) }}
-    </div>
-{% endif %}
+    <form action="{{ path('job_create') }}" method="post" {{ form_enctype(form) }}>
+        {% if form_errors(form) %}
+            <div class=" label label-important">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
 
-    <div class="job background">
-        <div class="job_header_left">
-            <div class="box"><h3> {% trans %}job.jobnumber{% endtrans %}</h3> </div>
-            <div class="box"><h3> {% trans %}job.state{% endtrans %} </h3>
+        <div class="job background">
+            <div class="job_header_left">
+                <div class="box"><h3> {% trans %}job.jobnumber{% endtrans %}</h3></div>
+                <div class="box"><h3> {% trans %}job.state{% endtrans %} </h3>
                     offen
 
                     <img src="/img/glyphicons_png/glyphicons_204_unlock.png"/>
 
-            </div>
-            <div class="box"><h3>{% trans %}job.type{% endtrans %}</h3>
-                {{ form_errors(form.jobType) }}
-                {{ form_widget(form.jobType) }}
-            </div>
+                </div>
+                <div class="box"><h3>{% trans %}job.type{% endtrans %}</h3>
+                    {{ form_errors(form.jobType) }}
+                    {{ form_widget(form.jobType) }}
+                </div>
 
-            <div class="box"><h3>{% trans %}job.end{% endtrans %}</h3>
-               <div>
-                   {{ form_errors(form.end) }}
-                   {{ form_widget(form.end) }}
-               </div>
-            </div>
-            <div class="box"><h3>{% trans %}job.start{% endtrans %}</h3>
-                <div>
-                    {{ form_errors(form.start) }}
-                    {{ form_widget(form.start) }}
+                <div class="box"><h3>{% trans %}job.end{% endtrans %}</h3>
+
+                    <div>
+                        {{ form_errors(form.end) }}
+                        {{ form_widget(form.end) }}
+                    </div>
+                </div>
+                <div class="box"><h3>{% trans %}job.start{% endtrans %}</h3>
+
+                    <div>
+                        {{ form_errors(form.start) }}
+                        {{ form_widget(form.start) }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="job_header_right">
+            <div class="job_header_right">
 
-            <div class="box">
+                <div class="box">
 
-                <div>
-                    <h3>{% trans %}job.company{% endtrans %}</h3><br>
+                    <div>
+                        <h3>{% trans %}job.company{% endtrans %}</h3><br>
+                    </div>
+                    <div>
+                        <input type="text" id="customersearch"> <br>
+                        <button class="btn" id="newCustomer">Neuer Kunde</button>
+
+
+                    </div>
+
+
                 </div>
-                <div>
-                    <input type="text" id="customersearch" >
-                    <div class="contactinfo" style="display: none">
-                        {% trans %}job.contactPerson{% endtrans %} {{ form_errors(form.contactPerson) }}
-                        {{ form_widget(form.contactPerson) }}<br>
-                        {% trans %}job.contactInfo{% endtrans %}{{ form_errors(form.contactInfo) }}
-                        {{ form_widget(form.contactInfo) }}<br>
+
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.address{% endtrans %}</h3>
+                    </div>
+                    <div id="address">
+
+                    </div>
+
+
+                </div>
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.contactPerson{% endtrans %} </h3>
+                    </div>
+
+                    <div class="contactinfo">
+                        {{ form_errors(form.contactPerson) }}
+                        {{ form_widget(form.contactPerson) }}
+                    </div>
+                </div>
+                <div class="box">
+                    <div>
+                       <h3> {% trans %}job.contactInfo{% endtrans %}</h3>
+                    </div>
+                    <div>
+                        {{ form_errors(form.contactInfo) }}
+                        {{ form_widget(form.contactInfo) }}
+                    </div>
+
+
+                </div>
+
+                <div class="box">
+
+                    <div id="GOOGLEMAPS">
+
                     </div>
 
                 </div>
-
-
             </div>
 
-            <div class="box">
-                <div>
-                    <h3> {% trans %}job.address{% endtrans %}</h3>
-                </div>
-                <div id="address">
-                    {{ form_errors(form.Address) }}
-                    {{ form_widget(form.Address) }}
-                </div>
-
-
-
-
-            </div>
-
-
-            <div class="box">
-
-                <div>
-                    GOOGLEMAPS
-                </div>
-
-            </div>
-        </div>
-        <div class="job_content">
-            <div class="box">
-                <h3>{% trans %}job.job{% endtrans %}</h3>
-
-                <br>
-                {{ form_errors(form.description) }}
-                {{ form_widget(form.description) }}
-            </div>
-            <div class="box">
-                <h3>Dateien</h3>
-                <table class="filelist">
-                    <tr>
-                        <th>test.pdf</th>
-                        <td>100kb</td>
-                        <td><a href="#"><img src="/img/glyphicons_png/glyphicons_051_eye_open.png"/> ansehen</a></td>
-                        <td><a href="#">download</a> </td>
-                    </tr>
-                    <tr>
-                        <th>test.pdf</th>
-                        <td>100kb</td>
-                        <td><a href="#"><img src="/img/glyphicons_png/glyphicons_051_eye_open.png"/> ansehen</a></td>
-                        <td><a href="#">download</a> </td>
-                    </tr>
-
-                </table>
-            </div>
-            <div class="box">
-                <button class="btn"><img src="/img/glyphicons_png/glyphicons_062_paperclip.png"/> Neue Datei</button>
-            </div>
-        </div>
-        <div class="job_fooder">
-            <div class="dates">
+            <div class="job_content">
                 <div class="box">
-                    erstellt am
+                    <h3>{% trans %}job.job{% endtrans %}</h3>
+
+                    <br>
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description, { 'attr': {'class': 'ckeditor'} }) }}
                 </div>
-                <div class="box">
-                    zuletzt geändert am
-                </div>
+
+
             </div>
+            <div class="job_fooder">
+                <div class="dates">
+                    <div class="box">
+                        erstellt am
+                    </div>
+                    <div class="box">
+                        zuletzt geändert am
+                    </div>
+                </div>
 
-            <ul class="job_fooder_buttons_left">
-                <li><button class="btn">zurück</button></li>
-                <li><button class="btn" type="submit">Create</button></li>
-            </ul>
-            {{ form_rest(form) }}
+                <ul class="job_fooder_buttons_left">
+                    <li>
+                        <button class="btn">zurück</button>
+                    </li>
+                    <li>
+                        <button class="btn" type="submit">Erstellen</button>
+                    </li>
+                </ul>
+                {{ form_rest(form) }}
+            </div>
         </div>
-    </div>
 
 
-
-</form>
+    </form>
 {% endblock %}

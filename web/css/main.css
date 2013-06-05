@@ -158,6 +158,10 @@ div.box div{
     vertical-align: top;
     min-width: 100px;
 }
+div.box div.cke_inner{
+    display: block;
+}
+
 div.box div h3{
     display: block;
     line-height: 1.5em;
@@ -516,6 +520,10 @@ div#AdressSelect ul li:hover{
 
 }
 
+select.ui-timepicker-select{
+    width: auto;
+}
+
 
 /******************* dropdown ********************/
 div.dropdown-list {
@@ -606,8 +614,29 @@ div.dropdown-button{
 }
 
 
+/* Large desktop */
+@media (min-width: 1200px) {
 
 
-/* Text Styles */
+
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+
+
+}
+
 
 

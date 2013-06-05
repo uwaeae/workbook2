@@ -9,7 +9,7 @@
 var AddressSelect = function(){
     var id = $(this).data('id');
     $('#address').empty().html($(this).find('div').html()).show();
-    $('input#form_Address').val(id);
+    $('input#wb_corebundle_jobtype_Address').val(id);
     $('#AdressSelect').slideUp();
     $('div#address address').click(function(){
         $('#address').hide();
@@ -19,7 +19,11 @@ var AddressSelect = function(){
 }
 
 
+
 $(document).ready(function(){
+
+
+
 
 
     $('.datetimepicker').datetimepicker({
@@ -37,20 +41,31 @@ $(document).ready(function(){
         secondText: 'Sekunden',
         currentText: 'Jetzt',
         closeText: 'Fertig',
-        showTime: false
+        onSelect :  function(datetimeText, datepickerInstance){
+                       // $(this).find('input').val(datetimeText);
+                        console.log($(this));
+                        console.log(datepickerInstance);
 
+                        $('#'+datepickerInstance.id).val(datetimeText);
+                    },
+        showTime: false
     });
     var start = new Date();
 
     start.setDate(start.getDate() +7);
     start.setHours(8);
     start.setMinutes(0);
-    $('#form_end').datetimepicker('setDate', start );
+    $('#wb_corebundle_jobtype_start').datetimepicker('setDate', start );
+  //  $('#wb_corebundle_jobtype_start').val( start );
     var end = new Date();
     end.setDate(end.getDate()+7);
     end.setHours(16);
     end.setMinutes(0);
-    $('#form_start').datetimepicker('setDate', end );
+    $('#wb_corebundle_jobtype_end').datetimepicker('setDate', end);
+  //  $('#wb_corebundle_jobtype_end').val(end);
+
+
+
 
 
     $( "#customersearch" ).autocomplete({
@@ -76,7 +91,7 @@ $(document).ready(function(){
 
             if(data.length == 1){
                 var item = data[0];
-                $('input#form_Address').val(item.id);
+                $('input#wb_corebundle_jobtype_Address').val(item.id);
                 var AdressString = '<address>'+item.street+'<br>' +
                     item.postcode+' '+item.city+' '+item.destrict+'<br>' +
                     'Tel. '+item.fon+'<br>Fax '+item.fax+'<br>' +

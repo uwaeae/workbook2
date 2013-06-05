@@ -154,7 +154,12 @@ class Job
     /**
      * @ORM\OneToMany(targetEntity="Task", mappedBy="job")
      */
-    protected $tasks;
+    protected $Tasks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Itementry", mappedBy="job")
+     */
+    protected $Items;
 
 
 
@@ -184,8 +189,12 @@ class Job
     {
         $this->file = new \Doctrine\Common\Collections\ArrayCollection();
         $this->invoice = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
+    public function __toString(){
+        return $this->getID().'';
+    }
 
     /**
      * Get id
@@ -616,5 +625,71 @@ class Job
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add tasks
+     *
+     * @param WB\CoreBundle\Entity\Task $tasks
+     * @return Job
+     */
+    public function addTask(\WB\CoreBundle\Entity\Task $task)
+    {
+        $this->Tasks[] = $task;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tasks
+     *
+     * @param WB\CoreBundle\Entity\Task $tasks
+     */
+    public function removeTask(\WB\CoreBundle\Entity\Task $task)
+    {
+        $this->Tasks->removeElement($task);
+    }
+
+    /**
+     * Get tasks
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTasks()
+    {
+        return $this->Tasks;
+    }
+
+    /**
+     * Add Items
+     *
+     * @param WB\CoreBundle\Entity\Itementry $items
+     * @return Job
+     */
+    public function addItem(\WB\CoreBundle\Entity\Itementry $items)
+    {
+        $this->Items[] = $items;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Items
+     *
+     * @param WB\CoreBundle\Entity\Itementry $items
+     */
+    public function removeItem(\WB\CoreBundle\Entity\Itementry $items)
+    {
+        $this->Items->removeElement($items);
+    }
+
+    /**
+     * Get Items
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getItems()
+    {
+        return $this->Items;
     }
 }

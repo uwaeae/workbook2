@@ -56,7 +56,24 @@ class Customer
      */
     private $headoffice;
 
+    /**
+     * @var $Address
+     *
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="customer")
+     */
+    protected $Address;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Address = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    public function __toString(){
+        return $this->getCompany();
+    }
 
     /**
      * Get id
@@ -181,5 +198,39 @@ class Customer
     public function getHeadoffice()
     {
         return $this->headoffice;
+    }
+
+    
+    /**
+     * Add Address
+     *
+     * @param WB\CoreBundle\Entity\Address $address
+     * @return Customer
+     */
+    public function addAddres(\WB\CoreBundle\Entity\Address $address)
+    {
+        $this->Address[] = $address;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Address
+     *
+     * @param WB\CoreBundle\Entity\Address $address
+     */
+    public function removeAddres(\WB\CoreBundle\Entity\Address $address)
+    {
+        $this->Address->removeElement($address);
+    }
+
+    /**
+     * Get Address
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getAddress()
+    {
+        return $this->Address;
     }
 }

@@ -22,7 +22,7 @@
                 <div class="box"><h3>Auftragsnummer</h3> {{ entity.id }}</div>
                 <div class="box"><h3>Status</h3>
 
-                        {% if entity.jobState.id == 1 %}
+                       {% if entity.jobState.id == 1 %}
                         {{entity.jobState}} <img src="/img/glyphicons_png/glyphicons_204_unlock.png"/>
                         {% elseif entity.jobState.id == 2 %}
                        {{entity.jobState}} <img src="/img/glyphicons_png/glyphicons_203_lock.png"/>
@@ -42,9 +42,9 @@
 
                     </div>
                     <div>
-                   {{ entity.contactPerson }}<br>
-                   {{ entity.contactInfo }}
+                        {{ entity.Address.customer.company }}
                     </div>
+
 
                 </div>
 
@@ -53,7 +53,7 @@
                         <h3> {% trans %}job.address{% endtrans %}</h3>
                     </div>
                     <div>
-                        {{ entity.Address.customer.company }}<br>
+
                         {% if  entity.Address.number %} {% trans %}job.Storenumber{% endtrans %} {{ entity.Address.number}} {% endif %}
                         <address> {{ entity.Address.street }} <br>
                             {{ entity.Address.postcode }} {{ entity.Address.city  }} {{ entity.Address.destrict }} <br>
@@ -62,12 +62,33 @@
                             Fax. {{ entity.Address.fax }}
                         </address>
                     </div>
+                </div>
+
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.contactPerson{% endtrans %}</h3>
+                    </div>
+                    <div>
+                        {{ entity.contactPerson }}
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.contactInfo{% endtrans %}</h3>
+                    </div>
+                    <div>
+
+                        {{ entity.contactInfo }}
+                    </div>
 
                 </div>
 
 
                <div class="box">
-                        
+                   <div>
+                       <h3> {% trans %}job.map{% endtrans %}</h3>
+                   </div>
                    <div>
                    GOOGLEMAPS
                    </div>
@@ -76,7 +97,7 @@
             </div>
             <div class="job_content">
                 <div class="box">
-                    <h3>Auftrag</h3> <br>{{ entity.description }}
+                    <h3>Auftrag</h3> <br>{{ entity.description |raw}}
                 </div>
                 <div class="box">
                     <h3>Dateien</h3>
@@ -119,7 +140,7 @@
 
                 <ul class="job_fooder_buttons_left">
                     <li><button class="btn">zurück</button></li>
-                    <li><button class="btn">ändern</button></li>
+                    <li><a href="{{ path('job_edit', { 'id': entity.id }) }}" class="btn">ändern</a></li>
                 </ul>
                 <ul class="job_fooder_buttons_right">
 
@@ -139,6 +160,12 @@
         </ul>
         {% if scheduledTasks|length > 0 %}
         <table class="job_task_table">
+            <colgroup>
+                <col width="10%">
+                <col width="10%">
+                <col width="40%">
+                <col width="10%">
+            </colgroup>
             <thead>
                 <tr>
                 <th> {% trans %}task.start{% endtrans %}</th>
@@ -183,9 +210,21 @@
         </table>
 
         {% endif %}
+
+        {% if finishedTasks|length > 0 %}
         <h3>Arbeiten</h3>
 
         <table class="job_task_table">
+            <colgroup>
+                <col width="10%">
+                <col width="10%">
+                <col width="40%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+            </colgroup>
+
             <thead>
             <tr>
                 <th > {% trans %}task.start{% endtrans %}</th>
@@ -209,7 +248,7 @@
                     <td>{{ task.task.end|date("d.m.y H:i")  }}</td>
 
                     <td>{{ task.task.info  }}</td>
-                    <td>{{ task.time}}</td>
+                    <td style="text-align: right">{{ task.time}}</td>
                     <td>{{ task.task.overtime  }}</td>
                     <td>
                         <ul>
@@ -225,15 +264,18 @@
             {% endfor %}
             </tbody>
             <tfoot>
-            <tr>
+            {% if overtime > 0 %}
+             <tr>
                 <td></td>
                 <td></td>
 
                 <th>{% trans %}task.summary_seperate{% endtrans %}</th>
-                <td>{{ work  }}</td>
+                <td style="text-align: right; padding-right: 10px;" >{{ work  }}</td>
                 <td>{{ overtime  }}</td>
                 <td></td>
             </tr>
+            {% endif %}
+            {% if work > 0 %}
             <tr>
                 <td></td>
 
@@ -243,10 +285,11 @@
 
                 <td></td>
             </tr>
+            {% endif %}
             </tfoot>
 
         </table>
-
+        {% endif %}
 
     </div>
 

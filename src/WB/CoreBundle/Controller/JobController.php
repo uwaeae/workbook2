@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use WB\CoreBundle\Entity\Job;
+use WB\CoreBundle\Entity\JobState;
 use WB\CoreBundle\Form\JobType;
 
 /**
@@ -261,9 +262,11 @@ class JobController extends Controller
     public function newAction()
     {
         $entity = new Job();
-        $form   = $this->createForm(new JobType(), $entity);
+        $form   = $this->createForm(new JobType(), $entity,array(
+            'em' => $this->getDoctrine()->getManager(),
+        ));
 
-        $form = $this->createFormBuilder($entity)
+        /*$form = $this->createFormBuilder($entity)
             ->add('contactPerson')
             ->add('contactInfo')
             ->add('end')
@@ -271,8 +274,10 @@ class JobController extends Controller
             ->add('Address','hidden')
             ->add('description')
             ->add('jobType',null,array(
-                'data' => 1,))
+                'empty_value' => false,
+                'data' => '1'))
             ->getForm();
+        */
 
 
 
@@ -292,12 +297,29 @@ class JobController extends Controller
      */
     public function createAction(Request $request)
     {
+        $user = $this->get('security.context')->getToken()->getUser();
         $entity  = new Job();
-        $form = $this->createForm(new JobType(), $entity);
+        $form = $this->createForm(new JobType(), $entity,array(
+            'em' => $this->getDoctrine()->getManager(),
+        ));
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $data = $request->request->get('wb_corebundle_jobtype');
+            $end = DateTime::createFromFormat('d.m.Y H:i', $data['end']);
+            $entity->setEnd($end);
+            $start = DateTime::createFromFormat('d.m.Y H:i', $data['start']);
+            $entity->setStart($start);
+            $entity->setCreatedAt(new DateTime());
+            $entity->setCreatedFrom($user->getId());
+            $entity->setUpdatedAt(new DateTime());
+            $entity->setUpdatedFrom($user->getId());
+            $entity->setJobState($em->getRepository('WBCoreBundle:JobState')->find(1));
+            //$address = $em->getRepository('WBCoreBundle:Address')->find($data['address']);
+            //$entity->setAddress($address);
+
             $em->persist($entity);
             $em->flush();
 
@@ -326,12 +348,14 @@ class JobController extends Controller
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
 
-        $editForm = $this->createForm(new JobType(), $entity);
+        $editForm = $this->createForm(new JobType(), $entity,array(
+            'em' => $this->getDoctrine()->getManager(),
+        ));
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }

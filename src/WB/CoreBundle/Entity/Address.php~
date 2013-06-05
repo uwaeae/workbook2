@@ -117,6 +117,10 @@ class Address
 
 
 
+    public function __toString(){
+        return $this->getStreet().' '.$this->getNumber();
+    }
+
     /**
      * Get id
      *

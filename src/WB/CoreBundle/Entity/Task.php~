@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * WB\CoreBundle\Entity\Task
  *
  * @ORM\Table(name="task")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WB\CoreBundle\Entity\TaskRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Task
 {
@@ -138,6 +139,12 @@ class Task
     private $job;
 
     /**
+     * @ORM\OneToMany(targetEntity="Entry", mappedBy="task")
+     */
+    protected $Entries;
+
+
+    /**
      * @var TaskType
      *
      * @ORM\ManyToOne(targetEntity="TaskType")
@@ -153,6 +160,7 @@ class Task
     public function __construct()
     {
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Entries = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -542,5 +550,38 @@ class Task
     public function getTaskType()
     {
         return $this->taskType;
+    }
+
+    /**
+     * Add Entries
+     *
+     * @param WB\CoreBundle\Entity\Entry $entries
+     * @return Task
+     */
+    public function addEntrie(\WB\CoreBundle\Entity\Entry $entries)
+    {
+        $this->Entries[] = $entries;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Entries
+     *
+     * @param WB\CoreBundle\Entity\Entry $entries
+     */
+    public function removeEntrie(\WB\CoreBundle\Entity\Entry $entries)
+    {
+        $this->Entries->removeElement($entries);
+    }
+
+    /**
+     * Get Entries
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getEntries()
+    {
+        return $this->Entries;
     }
 }

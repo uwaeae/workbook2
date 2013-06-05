@@ -1,22 +1,162 @@
-<h1>Job edit</h1>
+{% extends '::base.html.twig' %}
 
-<form action="{{ path('job_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="/js/ckeditor/contents.css" rel="stylesheet" media="screen">
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('job') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('job_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/jquery-ui-timepicker-addon.js"></script>
+    <script src="{{ asset('/js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/ckeditor/config.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/ckeditor/styles.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/job_new.js') }}" type="text/javascript"></script>
+
+
+{% endblock %}
+
+{% block title %}Workbook 2.0 {% endblock %}
+{% block body %}
+
+    {% form_theme form 'WBCoreBundle:Form:form.html.twig' %}
+    <form action="{{ path('job_create') }}" method="post" {{ form_enctype(form) }}>
+        {% if form_errors(form) %}
+            <div class=" label label-important">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+
+        <div class="job background">
+            <div class="job_header_left">
+                <div class="box"><h3> {% trans %}job.jobnumber{% endtrans %}</h3></div>
+                <div class="box"><h3> {% trans %}job.state{% endtrans %} </h3>
+                    offen
+
+                    <img src="/img/glyphicons_png/glyphicons_204_unlock.png"/>
+
+                </div>
+                <div class="box"><h3>{% trans %}job.type{% endtrans %}</h3>
+                    {{ form_errors(form.jobType) }}
+                    {{ form_widget(form.jobType) }}
+                </div>
+
+                <div class="box"><h3>{% trans %}job.end{% endtrans %}</h3>
+
+                    <div>
+                        {{ form_errors(form.end) }}
+                        {{ form_widget(form.end) }}
+                    </div>
+                </div>
+                <div class="box"><h3>{% trans %}job.start{% endtrans %}</h3>
+
+                    <div>
+                        {{ form_errors(form.start) }}
+                        {{ form_widget(form.start) }}
+                    </div>
+                </div>
+            </div>
+            <div class="job_header_right">
+
+
+                <div class="box">
+
+                    <div>
+                        <h3>{% trans %}job.company{% endtrans %}</h3><br>
+                    </div>
+                    <div>
+                        <input type="text" id="customersearch" value="{{ entity.Address.customer.company }}"> <br>
+                        <button class="btn" id="newCustomer">Neuer Kunde</button>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.address{% endtrans %}</h3>
+                    </div>
+                    <div id="address">
+                        {% if  entity.Address.number %} {% trans %}job.Storenumber{% endtrans %} {{ entity.Address.number}} {% endif %}
+                        <address> {{ entity.Address.street }} <br>
+                            {{ entity.Address.postcode }} {{ entity.Address.city  }} {{ entity.Address.destrict }} <br>
+
+                            Tel. {{ entity.Address.fon }}  <br>
+                            Fax. {{ entity.Address.fax }}
+                        </address>
+                    </div>
+
+
+                </div>
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.contactPerson{% endtrans %} </h3>
+                    </div>
+
+                    <div class="contactinfo">
+                        {{ form_errors(form.contactPerson) }}
+                        {{ form_widget(form.contactPerson) }}
+                    </div>
+                </div>
+                <div class="box">
+                    <div>
+                        <h3> {% trans %}job.contactInfo{% endtrans %}</h3>
+                    </div>
+                    <div>
+                        {{ form_errors(form.contactInfo) }}
+                        {{ form_widget(form.contactInfo) }}
+                    </div>
+
+
+                </div>
+
+                <div class="box">
+
+                    <div id="GOOGLEMAPS">
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="job_content">
+                <div class="box">
+                    <h3>{% trans %}job.job{% endtrans %}</h3>
+
+                    <br>
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description, { 'attr': {'class': 'ckeditor'} }) }}
+                </div>
+
+
+            </div>
+            <div class="job_fooder">
+                <div class="dates">
+                    <div class="box">
+                        erstellt am
+                    </div>
+                    <div class="box">
+                        zuletzt geändert am
+                    </div>
+                </div>
+
+                <ul class="job_fooder_buttons_left">
+                    <li>
+                        <a href="{{ path('job_show', { 'id': entity.id }) }}" class="btn">zurück</a>
+                    </li>
+                    <li>
+                        <button class="btn" type="submit">Speichern</button>
+                    </li>
+                    <li>
+                        <button class="btn" >Löschen</button>
+                    </li>
+                </ul>
+                {{ form_rest(form) }}
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
